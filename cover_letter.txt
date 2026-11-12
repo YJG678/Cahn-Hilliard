@@ -1,0 +1,24 @@
+To the Editors, SIAM Journal on Numerical Analysis
+
+Dear Editors,
+
+We submit the manuscript "Solving a second-order energy-stable Cahn–Hilliard scheme by preconditioned descent: global convergence, computable stopping rules, and error estimates" for consideration in SIAM Journal on Numerical Analysis.
+
+Second-order energy-stable schemes for the Cahn–Hilliard equation are implicit, and their stability and convergence theorems concern exact solutions of each step equation. In practice the step equations are solved approximately, often by a fixed number of sweeps of a linear iteration. The manuscript analyses the scheme as it is actually computed, for the modified Crank–Nicolson Fourier pseudo-spectral scheme of Cheng, Wang, Wise and Yue (J. Sci. Comput. 2016) in its practically used form with α = 0.
+
+Main results:
+
+1. Each step minimises an explicit strongly convex functional. The linear iteration of Cheng et al. is a fixed-step preconditioned gradient descent for this functional.
+2. The relaxed iteration converges globally for every stabilisation parameter, under an explicit step-size condition. An Armijo variant converges without parameters, and we give an explicit local rate. Contraction for α = 0 was left open in the 2016 paper (Remark 2.10).
+3. A two-sided a posteriori bound holds between the step residual and the error of any candidate. An exact energy identity also holds for arbitrary candidates. Together they give acceptance tests, costing no additional transforms, that guarantee modified-energy decay of the computed solution.
+4. If every accepted step meets a residual tolerance proportional to τ², the computed solution converges at the optimal rate O(τ² + h^m) in ℓ∞(H⁻¹) ∩ ℓ²(H¹).
+5. The experiments show that the unrelaxed iteration can diverge in practical regimes. They also show that relaxation with a fixed number of sweeps lowers the observed temporal order, whereas residual-based termination keeps second order.
+
+Relation to recent work: Zhu, Gong and Wang (Commun. Comput. Phys. 38, 2025) prove ℓ⁴ contraction of a linear iteration for a related family of Crank–Nicolson schemes. Our analysis differs in the metric, in its global and line-search results, and in its treatment of termination and of the computed solution. [Authors: confirm the precise overlap against the full text of that paper before submission.]
+
+Code, data and scripts reproducing every table and figure are provided as supplementary material.
+
+The manuscript is not under consideration elsewhere.
+
+Sincerely,
+[Corresponding author, affiliation, e-mail]
