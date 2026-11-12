@@ -1,0 +1,246 @@
+\section{Inner iterations and computable termination}\label{sec:solver}
+
+\subsection{The linear iteration is preconditioned gradient descent}
+Let $f_n=\tau^{-1}\phi^n-\LapN\ell_n-\frac14\eps^2\LapN^2\phi^{n-1}$ and, for $v\in\Vn$, $\LA\Gn(v)=f_n+\LapN\chi(v,\phi^n)$, i.e.
+\begin{equation}\label{eq:Gfourier}
+\widehat{\Gn(v)}_k=\lambda_k^{-1}\big(\hat f_{n,k}-s_k\,\widehat{\chi(v,\phi^n)}_k\big).
+\end{equation}
+The linear iteration of \cite{ChengWangWiseYue2016} is $v\mapsto\Gn(v)$; its relaxed form is
+\begin{equation}\label{eq:relaxed}
+v^{k+1}=(1-\omega_k)v^k+\omega_k\Gn(v^k),\qquad v^0=2\phi^n-\phi^{n-1}.
+\end{equation}
+
+\begin{lemma}\label{lem:gradient}
+For $v\in\Vn$: $\Gn(v)\in\Vn$, $v-\Gn(v)=\Bo\Rn(v)$, and \eqref{eq:relaxed} is
+\begin{equation}\label{eq:descent}
+v^{k+1}=v^k-\omega_k\Bo\Rn(v^k),
+\end{equation}
+gradient descent for $\Jn$ in $(\Vo,\ip{\Bo^{-1}\cdot}\cdot)$: $\ip{\Bo^{-1}(\Bo\Rn(v))}{d}=\frac{d}{dt}\Jn(v+td)|_{t=0}$.
+\end{lemma}
+
+\begin{proof}
+Since $\LapN\Po=\LapN$, \eqref{eq:residual} gives
+\begin{align*}
+-\LapN\Rn(v)&=\tfrac1\tau(v-\phi^n)-\LapN\chi(v,\phi^n)+\LapN\tilde\phi^n+\tfrac34\eps^2\LapN^2v+\tfrac14\eps^2\LapN^2\phi^{n-1}\\
+&\qquad-A\LapN(v-2\phi^n+\phi^{n-1})\\
+&=\LA v-\big(\tfrac1\tau\phi^n-\LapN\ell_n-\tfrac14\eps^2\LapN^2\phi^{n-1}\big)-\LapN\chi(v,\phi^n)=\LA\big(v-\Gn(v)\big).
+\end{align*}
+The $k=0$ component gives $\tau^{-1}(\hat v_0-\widehat{\Gn(v)}_0)=0$, so $v-\Gn(v)\in\Vo$ and $v-\Gn(v)=\LA^{-1}(-\LapN)\Rn(v)=\Bo\Rn(v)$. The last statement is \cref{prop:convex}(i).
+\end{proof}
+
+With $\hat p=\hat v-\widehat{\Gn(v)}$, $\widehat{\Rn(v)}_k=\beta_k^{-1}\hat p_k$ and, by Parseval,
+\begin{equation}\label{eq:Rnorms}
+\nB{\Rn(v)}^2=\nBi p^2=L^2\sum_{k\ne0}\beta_k^{-1}|\hat p_k|^2,\qquad \nrm{\Rn(v)}^2=L^2\sum_{k\ne0}\beta_k^{-2}|\hat p_k|^2 .
+\end{equation}
+A sweep costs one forward transform (of $\chi(v,\phi^n)$) and one inverse transform; every quantity used below is evaluated from Fourier coefficients (\cref{app:fourier}).
+
+\subsection{Global convergence}
+\begin{theorem}\label{thm:global}
+Let $v^0\in\Vn$, $S_0=\{v\in\Vn:\Jn(v)\le\Jn(v^0)\}$, $q_0=q(M_0)$ with $M_0=\max\{\nrm{\phi^n}_\infty,\max_{S_0}\nrm v_\infty\}$, finite by \cref{lem:Jlower}. If $\omega_k=\omega\in(0,\frac2{1+q_0})$, then $v^k\in S_0$ and
+\begin{align}
+\Jn(v^{k+1})&\le\Jn(v^k)-\omega\big(1-\tfrac{\omega(1+q_0)}2\big)\nB{\Rn(v^k)}^2,\label{eq:sufficient}\\
+\Jn(v^k)-\Jn^*&\le\kappa(\omega)^k\big(\Jn(v^0)-\Jn^*\big),\qquad \kappa(\omega)=1-\omega\big(2-\omega(1+q_0)\big),\label{eq:Jrate}\\
+\nBi{v^k-\phi^{n+1}}&\le\kappa(\omega)^{k/2}\nB{\Rn(v^0)},\qquad \min_\omega\kappa=\kappa\big(\tfrac1{1+q_0}\big)=\tfrac{q_0}{1+q_0}.\label{eq:errrate}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+Let $v=v^k\in S_0$, $p=\Bo\Rn(v)\ne0$, $g(t)=\Jn(v-tp)$, $g'(0)=-\ip{\Rn(v)}{\Bo\Rn(v)}=-\nB{\Rn(v)}^2=-\nBi p^2$. Let $t^*=\sup\{t\le\omega:\ v-sp\in S_0\ \forall s\in[0,t]\}>0$. On $[0,t^*]$, \eqref{eq:hessbound} with $M=M_0$ gives $g''\le(1+q_0)\nBi p^2$, so
+\[
+g(t)=g(0)+tg'(0)+\int_0^t(t-s)g''(s)\,ds\le g(0)-t\big(1-\tfrac{t(1+q_0)}2\big)\nBi p^2<g(0)\qquad(0<t\le t^*).
+\]
+If $t^*<\omega$, continuity of $g$ contradicts maximality of $t^*$. Hence $t^*=\omega$, $v^{k+1}\in S_0$ and \eqref{eq:sufficient}. By \eqref{eq:PL}, $\nB{\Rn(v^k)}^2\ge2(\Jn(v^k)-\Jn^*)$, and \eqref{eq:sufficient} yields $\Jn(v^{k+1})-\Jn^*\le[1-2\omega(1-\frac{\omega(1+q_0)}2)](\Jn(v^k)-\Jn^*)=\kappa(\omega)(\Jn(v^k)-\Jn^*)$. Then $\frac12\nBi{v^k-\phi^{n+1}}^2\le\Jn(v^k)-\Jn^*\le\kappa^k(\Jn(v^0)-\Jn^*)\le\frac12\kappa^k\nB{\Rn(v^0)}^2$. Finally $\kappa'(\omega)=-2+2\omega(1+q_0)=0$ at $\omega=\frac1{1+q_0}$, $\kappa=1-\frac1{1+q_0}$.
+\end{proof}
+
+\begin{corollary}\label{cor:linear}
+For $\omega=1$, $\Jn(v^k)-\Jn^*\le q_0^k(\Jn(v^0)-\Jn^*)$ whenever $q_0<1$, in particular whenever
+\begin{equation}\label{eq:linear-condition}
+\tfrac32M_0^2<A+\sqrt3\,\eps\,\tau^{-1/2}\qquad(\Rightarrow\ q_0=\tfrac32M_0^2\theta_N<1\text{ by \eqref{eq:theta}}).
+\end{equation}
+For $A=0$ this is $\tau<\frac43\eps^2M_0^{-4}$.
+\end{corollary}
+
+\begin{proof}
+$\kappa(1)=1-(2-1-q_0)=q_0$.
+\end{proof}
+
+\begin{lemma}\label{lem:increment}
+For $v\in\Vn$, $d\in\Vo$, with $b=\phi^n$,
+\begin{equation}\label{eq:increment}
+\Jn(v+d)-\Jn(v)=\ip{\Rn(v)}d+\tfrac12\nBi d^2+\Big(d^2\big(\tfrac12\chi_a(v,b)+d\,(\tfrac{3v+b}{12}+\tfrac d{16})\big),1\Big).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The quadratic part of $\Jn$ contributes $\ip{\tau^{-1}(-\LapN)^{-1}(v-\phi^n)-\frac34\eps^2\LapN v-\frac14\eps^2\LapN\phi^{n-1}+Av-\ell_n}d+\frac12\nBi d^2$. Since $G(\cdot,b)$ is a quartic polynomial, $G(v+d,b)-G(v,b)=\chi d+\frac12\chi_ad^2+\frac16\chi_{aa}d^3+\frac1{24}\chi_{aaa}d^4$ with $\chi_{aa}=\frac{3a+b}2$, $\chi_{aaa}=\frac32$. Adding and using \cref{prop:convex}(i) for the linear term gives \eqref{eq:increment}.
+\end{proof}
+Formula \eqref{eq:increment} avoids the cancellation in $\Jn(v+d)-\Jn(v)$, where both values are $O(1)$ and their difference is $O(\nB{\Rn}^2)$.
+
+\begin{theorem}[Armijo backtracking]\label{thm:armijo}
+Let $c\in(0,\frac12)$, $\gamma\in(0,1)$, $\hat\omega_k\in(0,1]$ with $\hat\omega_k\ge\min\{\hat\omega_0,\omega_{k-1}\}$, and let $\omega_k$ be the largest $\omega=\hat\omega_k\gamma^j$, $j\ge0$, with
+\[
+\Jn\big(v^k-\omega\Bo\Rn(v^k)\big)\le\Jn(v^k)-c\,\omega\nB{\Rn(v^k)}^2 .
+\] Then
+\[
+\omega_k\ge\underline\omega=\min\Big\{\hat\omega_0,\frac{2\gamma(1-c)}{1+q_0}\Big\},\qquad \Jn(v^{k+1})-\Jn^*\le(1-2c\,\underline\omega)\big(\Jn(v^k)-\Jn^*\big).
+\]
+\end{theorem}
+
+\begin{proof}
+By the proof of \cref{thm:global}, every $\omega\in(0,\frac2{1+q_0})$ gives $\Jn(v^k-\omega p)\le\Jn(v^k)-\omega(1-\frac{\omega(1+q_0)}2)\nB{\Rn(v^k)}^2$, and $1-\frac{\omega(1+q_0)}2\ge c$ iff $\omega\le\frac{2(1-c)}{1+q_0}$. Backtracking therefore stops at some $\hat\omega_k\gamma^j\ge\min\{\hat\omega_k,\gamma\frac{2(1-c)}{1+q_0}\}$, and $\omega_k\ge\underline\omega$ by induction. With \eqref{eq:PL}, $\Jn(v^k)-\Jn(v^{k+1})\ge c\,\omega_k\nB{\Rn(v^k)}^2\ge2c\,\underline\omega(\Jn(v^k)-\Jn^*)$.
+\end{proof}
+
+\begin{remark}\label{rem:c}
+For $p=\Bo\Rn(v)$ and $b=\phi^n$, $(\Rn(v),p)=\nB{\Rn(v)}^2=\nBi p^2$ gives
+\[
+\Jn(v-p)-\Jn(v)=-\tfrac12\nB{\Rn(v)}^2+\big(G(v-p,b)-G(v,b)+\chi(v,b)\,p,1\big),
+\]
+and the remainder is $\ge0$ because $G(\cdot,b)$ is convex ($\partial_a^2G=\chi_a\ge0$). Hence $c=\frac12$ accepts the unit step only if the remainder vanishes. We use $c=\frac14$, $\gamma=\frac12$, $\hat\omega_k=\min\{1,2\omega_{k-1}\}$.
+\end{remark}
+
+\subsection{Local rate}
+\begin{theorem}\label{thm:local}
+Let $\omega\in(0,2)$, $\omega_k=\omega$, $\xi^k=v^k-\phi^{n+1}$, $M_k=\max\{\nrm{v^k}_\infty,\nrm{\phi^{n+1}}_\infty,\nrm{\phi^n}_\infty\}$, $q_k=q(M_k)$. Then
+\begin{equation}\label{eq:local}
+\nBi{\xi^{k+1}}\le r(\omega,q_k)\nBi{\xi^k},\qquad r(\omega,q)=\max\{|1-\omega|,|1-\omega(1+q)|\},
+\end{equation}
+and if $v^k\to\phi^{n+1}$, $\limsup_k\nBi{\xi^{k+1}}/\nBi{\xi^k}\le r(\omega,q_*)$, $q_*=q(\max\{\nrm{\phi^{n+1}}_\infty,\nrm{\phi^n}_\infty\})$, with $\min_\omega r(\omega,q_*)=r(\frac2{2+q_*},q_*)=\frac{q_*}{2+q_*}$ and $r(1,q_*)=q_*$.
+\end{theorem}
+
+\begin{proof}
+By \eqref{eq:secantD} and $\Rn(\phi^{n+1})=0$, $\Rn(v^k)=\Rn(v^k)-\Rn(\phi^{n+1})=\Bo^{-1}\xi^k+\Po D_k\xi^k$ with $D_k=D(v^k,\phi^{n+1};\phi^n)$, because $\Rn$ is affine except for $\Po\chi(\cdot,\phi^n)$. Hence
+\begin{equation}\label{eq:errorprop}
+\xi^{k+1}=\xi^k-\omega\Bo\Rn(v^k)=\big[(1-\omega)I-\omega T_k\big]\xi^k,\qquad T_k=\Bo\Po D_k .
+\end{equation}
+\Cref{lem:spectral} with $p(\lambda)=1-\omega-\omega\lambda$ gives \eqref{eq:local}, since $\max_{[0,q]}|1-\omega-\omega\lambda|=r(\omega,q)$. $M_k\to\max\{\nrm{\phi^{n+1}}_\infty,\nrm{\phi^n}_\infty\}$ gives the limit; $r(\cdot,q_*)$ is minimal where $1-\omega=-(1-\omega(1+q_*))$, i.e.\ $\omega=\frac2{2+q_*}$.
+\end{proof}
+
+\subsection{Newton--PCG with truncated conjugate gradients}
+At $v\in\Vn$ let $g=\Bo\Rn(v)$ and $H=I+\Bo\Po\chi_a(v,\phi^n)$, so that the Newton equation $(\Bo^{-1}+\Po\chi_a)d=-\Rn(v)$ reads $Hd=-g$. With $\tilde q=q(\max\{\nrm v_\infty,\nrm{\phi^n}_\infty\})$, $H$ is self-adjoint in $\ip{\Bo^{-1}\cdot}\cdot$ with spectrum in $[1,1+\tilde q]$ (\cref{lem:spectral}). Conjugate gradients for $Hd=-g$ in this inner product, started from $d=0$, is PCG with preconditioner $\Bo$; one iteration costs one transform pair.
+
+\begin{lemma}\label{lem:cg}
+Let $d$ be the $j$-th CG iterate, $j\ge1$, and write $\langle\cdot,\cdot\rangle=\ip{\Bo^{-1}\cdot}\cdot$, $|\cdot|=\nBi\cdot$. Then
+\begin{equation}\label{eq:cgangle}
+\langle g,d\rangle\le-|d|^2,\qquad -\langle g,d\rangle\ge\frac{|g|^2}{1+\tilde q},\qquad |d|\le|g|,\qquad \frac{-\langle g,d\rangle}{|g|\,|d|}\ge\frac1{1+\tilde q}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+$d$ minimizes $m(w)=\langle g,w\rangle+\frac12\langle Hw,w\rangle$ over the Krylov space $\mathcal K_j\ni g$, so $\langle Hd+g,w\rangle=0$ for $w\in\mathcal K_j$. With $w=d$: $\langle g,d\rangle=-\langle Hd,d\rangle\le-|d|^2$, hence also $|d|^2\le|g||d|$. Further, since $-tg\in\mathcal K_j$, $m(d)=\frac12\langle g,d\rangle\le\min_tm(-tg)\le\min_t\big(-t|g|^2+\frac{t^2}2(1+\tilde q)|g|^2\big)=-\frac{|g|^2}{2(1+\tilde q)}$. The cosine bound follows from $-\langle g,d\rangle\ge|g|^2/(1+\tilde q)\ge|g||d|/(1+\tilde q)$.
+\end{proof}
+
+\begin{theorem}[Newton--PCG]\label{thm:newton}
+Let $d^k$ be any CG iterate ($j_k\ge1$) for $H_kd=-g_k$ at $v^k$, and $\omega_k=\max\{\gamma^i:\ \Jn(v^k+\gamma^id^k)\le\Jn(v^k)+c\gamma^i\ip{\Rn(v^k)}{d^k}\}$, $c\in(0,\frac12)$. Then $v^k\in S_0$,
+\[
+\omega_k\ge\underline\omega_N=\min\Big\{1,\frac{2\gamma(1-c)}{1+q_0}\Big\},\qquad \Jn(v^{k+1})-\Jn^*\le\Big(1-\frac{2c\,\underline\omega_N}{1+q_0}\Big)\big(\Jn(v^k)-\Jn^*\big).
+\]
+\end{theorem}
+
+\begin{proof}
+Note $\ip{\Rn(v)}d=\langle g,d\rangle<0$. As in \cref{thm:global}, for $\omega$ with $v^k+sd^k\in S_0$ on $[0,\omega]$, \eqref{eq:hessbound} and $|d^k|^2\le-\langle g_k,d^k\rangle$ give
+\[
+\Jn(v^k+\omega d^k)\le\Jn(v^k)+\omega\langle g_k,d^k\rangle+\tfrac{\omega^2}2(1+q_0)|d^k|^2\le\Jn(v^k)+\omega\langle g_k,d^k\rangle\big(1-\tfrac{\omega(1+q_0)}2\big),
+\]
+so the Armijo condition holds for $\omega\le\frac{2(1-c)}{1+q_0}$ and $\omega_k\ge\underline\omega_N$. Since $\tilde q_k\le q_0$, \eqref{eq:cgangle} and \eqref{eq:PL} give $\Jn(v^k)-\Jn(v^{k+1})\ge c\,\omega_k|g_k|^2/(1+q_0)\ge\frac{2c\,\underline\omega_N}{1+q_0}(\Jn(v^k)-\Jn^*)$.
+\end{proof}
+The rate depends on $N$ only through $\theta_N$ (bounded uniformly by \eqref{eq:theta}) and $M_0$; local quadratic convergence when $j_k$ grows suitably is standard \cite{NocedalWright2006}. In computations the CG relative tolerance is $10^{-2}$.
+
+\subsection{A two-sided a posteriori bound}\label{sec:termination}
+\begin{theorem}\label{thm:apost}
+For every $v\in\Vn$, with $M_v=\max\{\nrm v_\infty,\nrm{\phi^{n+1}}_\infty,\nrm{\phi^n}_\infty\}$,
+\begin{equation}\label{eq:apost}
+\nBi{v-\phi^{n+1}}\le\nB{\Rn(v)}\le\big(1+q(M_v)\big)\nBi{v-\phi^{n+1}} .
+\end{equation}
+Consequently
+\begin{equation}\label{eq:apost-norms}
+\nrm{\xi}\le\theta_N^{1/2}\nB{\Rn(v)},\quad \nrm{\gradN\xi}\le\tfrac{2}{\sqrt3\eps}\nB{\Rn(v)},\quad \nrm{\xi}_\infty\le\tfrac{2C_N}{\sqrt3\eps}\nB{\Rn(v)},\qquad \xi=v-\phi^{n+1}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+With $\xi=v-\phi^{n+1}\in\Vo$ and $D=D(v,\phi^{n+1};\phi^n)\ge0$, $\Rn(v)=\Bo^{-1}\xi+\Po D\xi$. Then $\nBi\xi^2\le\nBi\xi^2+\ip{D\xi}\xi=\ip{\Rn(v)}\xi\le\nB{\Rn(v)}\nBi\xi$, and $\nB{\Rn(v)}=\nBi{\Bo\Rn(v)}=\nBi{(I+\Bo\Po D)\xi}\le(1+q(M_v))\nBi\xi$ by \cref{lem:spectral}. \eqref{eq:apost-norms} follows from \eqref{eq:normequiv} and \cref{lem:discrete}(c).
+\end{proof}
+The lower bound holds without any assumption on $v,\tau,A,\eps,N$. The factor $q(M_v)$ involves $\phi^{n+1}$; a computable factor follows from \cref{lem:Jlower}.
+
+\begin{corollary}[computable effectivity]\label{cor:effectivity}
+For $v\in\Vn$ let $\mathcal M(v)=\max\{\nrm{\phi^n}_\infty,\ |\mean(\phi^n)|+\frac{2C_N}{\eps}(\Jn(v)+C_{J,n})^{1/2}\}$. Then
+\begin{equation}\label{eq:effectivity}
+\frac{\nB{\Rn(v)}}{1+q(\mathcal M(v))}\le\nBi{v-\phi^{n+1}}\le\nB{\Rn(v)} .
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+$\Jn(\phi^{n+1})\le\Jn(v)$, so $v$ and $\phi^{n+1}$ lie in $\{w:\Jn(w)\le\Jn(v)\}$, and \eqref{eq:sublevel-linf} with $\bar J=\Jn(v)$ gives $M_v\le\mathcal M(v)$; $q$ is increasing.
+\end{proof}
+Every quantity in $\mathcal M(v)$ is evaluated from $v,\phi^n,\phi^{n-1}$. \Cref{thm:apost} bounds the algebraic error of one step and complements estimators of the discretization error such as \cite{ZhouWuWang2026}.
+
+\subsection{Acceptance tests and energy stability of the computed solution}
+For $v\in\Vn$ define
+\begin{align}
+&\text{(T$_E$)}\qquad|\ip{\Rn(v)}{v-\phi^n}|\le\eta\,\Dn(v),\qquad 0<\eta<1,\label{eq:TE}\\
+&\text{(T$_A$)}\qquad\nrm{\Rn(v)}\le c_R\tau^2,\qquad c_R>0 .\label{eq:TA}
+\end{align}
+\begin{algorithm}[t]
+\caption{One time step with inexact solve}\label{alg:step}
+\KwIn{$\phi^n,\phi^{n-1}$, $\eta\in(0,1)$, $c_R>0$, an inner method (\eqref{eq:relaxed}, \cref{thm:armijo} or \cref{thm:newton})}
+$v\gets2\phi^n-\phi^{n-1}$\;
+\For{$k=0,1,\dots$}{
+$\hat p\gets\hat v-\widehat{\Gn(v)}$ (one forward transform)\;
+evaluate $\nrm{\Rn(v)}$, $\ip{\Rn(v)}{v-\phi^n}$, $\Dn(v)$ from $\hat p,\hat v,\hat\phi^n,\hat\phi^{n-1}$ (\cref{app:fourier})\;
+\lIf{\eqref{eq:TE} and \eqref{eq:TA} hold}{\Return{$\phi^{n+1}=v$}}
+one step of the inner method\;
+}
+\end{algorithm}
+
+\begin{theorem}\label{thm:energysafe}
+{\rm(a)} If $\phi^{n+1}=v$ satisfies (T$_E$), then
+\begin{equation}\label{eq:energysafe}
+(1-\eta)\Dn(\phi^{n+1})\le\Et(\phi^n,\phi^{n-1})-\Et(\phi^{n+1},\phi^n)\le(1+\eta)\Dn(\phi^{n+1}).
+\end{equation}
+If steps $0,\dots,\ell-1$ satisfy (T$_E$), then for every $\tau>0$, $A\ge0$,
+\begin{gather*}
+E_N(\phi^\ell)\le\Et(\phi^\ell,\phi^{\ell-1})\le E_N(\phi^0),\qquad \nrm{\gradN\phi^\ell}^2\le\tfrac2{\eps^2}\big(E_N(\phi^0)+\tfrac{|\Omega|}4\big),\\
+\sum_{n<\ell}\Dn(\phi^{n+1})\le(1-\eta)^{-1}\big(E_N(\phi^0)+\tfrac{|\Omega|}4\big).
+\end{gather*}
+{\rm(b)} If $v^k\to\phi^{n+1}$ and $v^0=2\phi^n-\phi^{n-1}$, \cref{alg:step} terminates.
+\end{theorem}
+
+\begin{proof}
+(a) By \eqref{eq:identity}, $\Et(\phi^n,\phi^{n-1})-\Et(\phi^{n+1},\phi^n)=\Dn-\ip{\Rn}{\phi^{n+1}-\phi^n}\in[(1-\eta)\Dn,(1+\eta)\Dn]$. Summing, $\Et(\phi^\ell,\phi^{\ell-1})+(1-\eta)\sum\Dn\le\Et(\phi^0,\phi^{-1})=E_N(\phi^0)$, and $\Et(a,b)\ge E_N(a)\ge\frac{\eps^2}2\nrm{\gradN a}^2-\frac{|\Omega|}4$ because $\frac14s^4-\frac12s^2\ge-\frac14$.
+(b) $\Rn(v^k)\to0$, so (T$_A$) holds eventually. If $\Dn(\phi^{n+1})>0$, then $\ip{\Rn(v^k)}{v^k-\phi^n}\to0<\eta\Dn(\phi^{n+1})=\lim\eta\Dn(v^k)$. If $\Dn(\phi^{n+1})=0$, \cref{cor:exactenergy} gives $\phi^{n-1}=\phi^n=\phi^{n+1}=v^0$ and both tests hold at $k=0$.
+\end{proof}
+
+\begin{remark}\label{rem:onesided}
+\eqref{eq:energysafe} with only the lower inequality needs only $\ip{\Rn(v)}{v-\phi^n}\le\eta\Dn(v)$. The two-sided (T$_E$) also excludes artificial over-dissipation, $\Et(\phi^n,\phi^{n-1})-\Et(\phi^{n+1},\phi^n)\le(1+\eta)\Dn$; all experiments use it.
+\end{remark}
+
+\subsection{A fixed number of sweeps}\label{sec:fixedK}
+\begin{proposition}\label{prop:fixedK}
+For \eqref{eq:relaxed} with $\omega_k=\omega$ and $\xi^k=v^k-\phi^{n+1}$,
+\begin{equation}\label{eq:voc}
+\xi^K=(1-\omega)^K\xi^0-\omega\sum_{k=0}^{K-1}(1-\omega)^{K-1-k}T_k\xi^k,\qquad \Rn(v^K)=\Bo^{-1}(I+T_K)\xi^K,
+\end{equation}
+with $T_k=\Bo\Po D(v^k,\phi^{n+1};\phi^n)$. On a Fourier mode $k\ne0$,
+\begin{equation}\label{eq:Binvsymbol}
+\beta_k^{-1}=\frac1{\tau s_k}\big(1+\tau As_k+\tfrac34\tau\eps^2s_k^2\big).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+\eqref{eq:errorprop} is $\xi^{k+1}=(1-\omega)\xi^k-\omega T_k\xi^k$; induction gives \eqref{eq:voc}. The residual identity is the one in the proof of \cref{thm:apost}.
+\end{proof}
+
+For a smooth solution, $\xi^0=\tau^2w+O(\tau^3)$ with $w$ smooth, and for smooth $f$, \eqref{eq:Binvsymbol} gives $\Bo^{-1}f=\tau^{-1}(-\LapN)^{-1}f+O(1)$ and $T_kf=\tau(-\LapN)\Po D_kf+O(\tau^2)$. Inserting into \eqref{eq:voc} formally,
+\begin{equation}\label{eq:fixedKres}
+\Rn(v^K)=(1-\omega)^K\,\tau\,(-\LapN)^{-1}w+O(\tau^2).
+\end{equation}
+Hence $\nrm{\Rn(v^K)}=O(\tau)$ for $\omega\ne1$, while $\nrm{\Rn(v^K)}=O(\tau^2)$ for $\omega=1$, $K\ge1$. By \eqref{eq:perturbed-scheme} the accepted iterate solves the scheme with the consistency defect $-\LapN\Rn$; \cref{cor:fixedK} turns $\nrm{\rho^n}=O(\tau)$ into an $O(\tau)$ error \emph{bound}. For the linearisation at $\phi=0$ the loss of order is proved.
+
+\begin{proposition}[linearised fixed sweeps]\label{prop:linfixed}
+Fix $s>0$, $A\ge0$, $\eps>0$, $K\ge1$, $\omega\in(0,1]$, and put $r=(1-\omega)^K$, $\lambda=s(1-\eps^2s)$. For the scheme linearised at $\phi=0$ on the Fourier mode with symbol $s$, computed with exactly $K$ sweeps of \eqref{eq:relaxed} from $2a_n-a_{n-1}$, the amplification factor $g_{\rm phys}(\tau)$ of the branch through $g=1$ satisfies
+\begin{equation}\label{eq:linfixed}
+g_{\rm phys}(\tau)=1+\lambda\tau+\Big(\tfrac12-\tfrac r{1-r}\Big)\lambda^2\tau^2+O(\tau^3),\qquad \tau^{-1}\log g_{\rm phys}(\tau)=\lambda-\tfrac r{1-r}\lambda^2\tau+O(\tau^2),
+\end{equation}
+and the other branch tends to $r$. Hence $g_{\rm phys}^{T/\tau}=e^{\lambda T}\big(1-\frac r{1-r}\lambda^2T\tau+O(\tau^2)\big)$. For $\lambda\ne0$ and $0<r<1$ the physical branch has a nonzero first-order growth-rate error; it vanishes for $r=0$ ($\omega=1$), and for the neutral mode $\lambda=0$ ($s=\eps^{-2}$) one has $g_{\rm phys}\equiv1$ for every $r$.
+\end{proposition}
+The proof is in \cref{app:linfixed}. The statement is modewise for fixed $s,A,\eps,K,\omega$ as $\tau\to0$; it is not uniform in $s$ or as $r\to1$. The reduced orders observed in \cref{sec:num-accuracy} are consistent with \eqref{eq:fixedKres} and \eqref{eq:linfixed}.

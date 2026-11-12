@@ -1,0 +1,4 @@
+64 {'status': 'ok', 'mean_it': 18.092, 'max_it': 21, 'nfft_per_step': 39.184}
+128 {'status': 'ok', 'mean_it': 16.744, 'max_it': 21, 'nfft_per_step': 36.488}
+256 {'status': 'ok', 'mean_it': 16.708, 'max_it': 21, 'nfft_per_step': 36.416}
+512 {'status': 'ok', 'mean_it': 16.704, 'max_it': 21, 'nfft_per_step': 36.408}

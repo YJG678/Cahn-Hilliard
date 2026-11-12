@@ -1,0 +1,8 @@
+0.0 linear_w1 8 2.9986074103699245e+17 practical at None
+0.0 relax_w05 92 8.362250807497086e-13 practical at 25
+0.0 armijo 41 8.65108872273253e-13 practical at 14
+0.0 newton 7 5.351101754520611e-14 practical at 3
+2.0 linear_w1 151 1.6855368579746077e-12 practical at 56
+2.0 relax_w05 38 7.602213105612234e-13 practical at 15
+2.0 armijo 27 4.911007377403924e-13 practical at 11
+2.0 newton 7 4.968115979205354e-14 practical at 3

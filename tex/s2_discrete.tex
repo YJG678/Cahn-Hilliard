@@ -1,0 +1,193 @@
+\section{Discrete setting and variational structure of a time step}\label{sec:scheme}
+
+\subsection{Grid functions}
+Let $N\ge2$ be even, $h=L/N$, $x_{ij}=(ih,jh)$, and $\Vh$ the real $L$-periodic grid functions. For $f,g\in\Vh$,
+\[
+\ip fg=h^2\!\!\sum_{i,j=0}^{N-1}\!f_{ij}g_{ij},\quad \nrm f=\ip ff^{1/2},\quad \nrm f_\infty=\max_{i,j}|f_{ij}|,\quad f_{ij}=\sum_{k\in K_N}\hat f_ke^{\mathrm i\kappa_k\cdot x_{ij}},
+\]
+with $K_N=\{k\in\Z^2:-\frac N2<k_1,k_2\le\frac N2\}$, $\kappa_k=2\pi k/L$, $s_k=|\kappa_k|^2$, and $\nrm f^2=L^2\sum_k|\hat f_k|^2$. The collocation Laplacian and the associated forms are
+\begin{equation}\label{eq:lapN}
+\widehat{(\LapN f)}_k=-s_k\hat f_k,\qquad \langle f,g\rangle_1=\ip{-\LapN f}g,\qquad \nrm{\gradN f}^2=L^2\sum_ks_k|\hat f_k|^2 .
+\end{equation}
+Let $\mean(f)=|\Omega|^{-1}\ip f1=\hat f_0$, $\Vo=\{f:\mean(f)=0\}$, $\Po f=f-\mean(f)$, and on $\Vo$
+\begin{equation}\label{eq:hm1}
+\nrm f_{-1}^2=\ip{(-\LapN)^{-1}f}f=L^2\sum_{k\ne0}s_k^{-1}|\hat f_k|^2 .
+\end{equation}
+Products such as $\phi^3$ are evaluated pointwise.
+
+\begin{lemma}\label{lem:discrete}
+For $f\in\Vo$: {\rm(a)} $\nrm f^2\le\nrm f_{-1}\nrm{\gradN f}$; {\rm(b)} $\nrm f\le\frac L{2\pi}\nrm{\gradN f}$; {\rm(c)} $\nrm f_\infty\le C_N\nrm{\gradN f}$, $C_N=\frac{\sqrt2}{\pi}(1+\ln N)^{1/2}$.
+\end{lemma}
+
+\begin{proof}
+(a) $\nrm f^2=L^2\sum_{k\ne0}(s_k^{-1/2}|\hat f_k|)(s_k^{1/2}|\hat f_k|)\le(L^2\sum s_k^{-1}|\hat f_k|^2)^{1/2}(L^2\sum s_k|\hat f_k|^2)^{1/2}$. (b) $s_k\ge(2\pi/L)^2$ for $k\ne0$. (c) \Cref{app:sobolev}.
+\end{proof}
+
+\subsection{The scheme}
+Let $\tau>0$, $A\ge0$ and
+\begin{equation}\label{eq:chi}
+\chi(a,b)=\tfrac14(a^2+b^2)(a+b),\qquad \chi(a,b)(a-b)=\tfrac14(a^4-b^4).
+\end{equation}
+Given $\phi^n,\phi^{n-1}$ with $\mean(\phi^n)=\mean(\phi^{n-1})$ and $\phi^{-1}:=\phi^0$, the scheme \cite{ChengWangWiseYue2016} ($\alpha=0$) is
+\begin{subequations}\label{eq:scheme}
+\begin{align}
+\tau^{-1}(\phi^{n+1}-\phi^n)&=\LapN\mu^{n+1/2},\\
+\mu^{n+1/2}&=\chi(\phi^{n+1},\phi^n)-\big(\tfrac32\phi^n-\tfrac12\phi^{n-1}\big)-\eps^2\LapN\big(\tfrac34\phi^{n+1}+\tfrac14\phi^{n-1}\big)\notag\\
+&\qquad+A\big(\phi^{n+1}-2\phi^n+\phi^{n-1}\big).
+\end{align}
+\end{subequations}
+Since $\widehat{(\LapN g)}_0=0$, $\mean(\phi^{n+1})=\mean(\phi^n)$. The discrete and modified energies are
+\begin{equation}\label{eq:modE}
+E_N(\phi)=\big(\tfrac14\phi^4-\tfrac12\phi^2,1\big)+\tfrac{\eps^2}{2}\nrm{\gradN\phi}^2,\qquad
+\Et(a,b)=E_N(a)+\big(\tfrac14+\tfrac A2\big)\nrm{a-b}^2+\tfrac{\eps^2}{8}\nrm{\gradN(a-b)}^2 .
+\end{equation}
+
+\subsection{The preconditioner and its metric}
+Let $\LA=\tau^{-1}-A\LapN+\frac34\eps^2\LapN^2$ and $\Bo=\LA^{-1}(-\LapN)$ on $\Vo$, with symbols
+\begin{equation}\label{eq:symbols}
+\lambda_k=\tau^{-1}+As_k+\tfrac34\eps^2s_k^2,\qquad \beta_k=s_k/\lambda_k\quad(k\ne0).
+\end{equation}
+Then $\Bo$ is symmetric positive definite on $\Vo$ and, for $f,g\in\Vo$,
+\begin{equation}\label{eq:Bnorm}
+\nBi f^2=L^2\sum_{k\ne0}\beta_k^{-1}|\hat f_k|^2=\tfrac1\tau\nrm f_{-1}^2+A\nrm f^2+\tfrac34\eps^2\nrm{\gradN f}^2,\qquad \nB g^2=L^2\sum_{k\ne0}\beta_k|\hat g_k|^2,
+\end{equation}
+\begin{equation}\label{eq:duality}
+\ip gf\le\nB g\nBi f,\qquad \nB g=\sup_{0\ne f\in\Vo}\frac{\ip gf}{\nBi f}.
+\end{equation}
+By the arithmetic--geometric mean inequality $\tau^{-1}+\frac34\eps^2s^2\ge2(\frac34\eps^2\tau^{-1})^{1/2}s=\sqrt3\,\eps\tau^{-1/2}s$, with equality at $s^2=\frac4{3\eps^2\tau}$. Hence
+\begin{equation}\label{eq:theta}
+\theta_N:=\max_{k\ne0}\beta_k\le\sup_{s>0}\frac{s}{\tau^{-1}+As+\frac34\eps^2s^2}=\frac{1}{A+\sqrt3\,\eps\,\tau^{-1/2}},
+\end{equation}
+\begin{equation}\label{eq:normequiv}
+\nrm f^2\le\theta_N\nBi f^2,\qquad \tfrac34\eps^2\nrm{\gradN f}^2\le\nBi f^2,\qquad \tfrac1\tau\nrm f_{-1}^2\le\nBi f^2\qquad(f\in\Vo).
+\end{equation}
+The bound \eqref{eq:theta} is uniform in $N$.
+
+\subsection{Residual, step functional and convexity}\label{sec:variational}
+Fix $n$, let $\Vn=\{v\in\Vh:\mean(v)=\mean(\phi^n)\}$, $\tilde\phi^n=\frac32\phi^n-\frac12\phi^{n-1}$, $\ell_n=\tilde\phi^n+A(2\phi^n-\phi^{n-1})$, and for $v\in\Vn$
+\begin{align}
+\mu_n(v)&=\chi(v,\phi^n)-\tilde\phi^n-\eps^2\LapN\big(\tfrac34v+\tfrac14\phi^{n-1}\big)+A\big(v-2\phi^n+\phi^{n-1}\big),\notag\\
+\Rn(v)&=\tau^{-1}(-\LapN)^{-1}(v-\phi^n)+\Po\mu_n(v)\in\Vo .\label{eq:residual}
+\end{align}
+Applying $-\LapN$ (injective on $\Vo$),
+\begin{equation}\label{eq:perturbed-scheme}
+\tau^{-1}(v-\phi^n)=\LapN\mu_n(v)-\LapN\Rn(v),
+\end{equation}
+so $v$ solves \eqref{eq:scheme} iff $\Rn(v)=0$. With
+\begin{equation}\label{eq:G}
+G(a,b)=\int_0^a\chi(s,b)\,ds=\tfrac{a^4}{16}+\tfrac{a^3b}{12}+\tfrac{a^2b^2}{8}+\tfrac{ab^3}{4},\quad \chi_a=\partial_a\chi=\tfrac14(3a^2+2ab+b^2)=\tfrac14\big(2a^2+(a+b)^2\big),
+\end{equation}
+define on $\Vn$
+\begin{equation}\label{eq:J}
+\Jn(v)=\tfrac1{2\tau}\nrm{v-\phi^n}_{-1}^2+\big(G(v,\phi^n),1\big)+\tfrac38\eps^2\nrm{\gradN v}^2+\tfrac{\eps^2}{4}\langle\phi^{n-1},v\rangle_1+\tfrac A2\nrm v^2-\ip{\ell_n}{v}.
+\end{equation}
+
+\begin{proposition}\label{prop:convex}
+Let $v,w\in\Vn$, $d\in\Vo$ and $j(t)=\Jn(v+td)$.
+\begin{enumerate}
+\item[(i)] $j'(0)=\ip{\Rn(v)}d$ and $j''(t)=\nBi d^2+\ip{\chi_a(v+td,\phi^n)d}{d}\ge\nBi d^2$.
+\item[(ii)] $\Jn(w)=\Jn(v)+\ip{\Rn(v)}{w-v}+\int_0^1(1-t)\,j_{w-v}''(t)\,dt\ge\Jn(v)+\ip{\Rn(v)}{w-v}+\frac12\nBi{w-v}^2$, where $j_{w-v}(t)=\Jn(v+t(w-v))$.
+\item[(iii)] $\Jn$ has a unique minimizer on $\Vn$; it is the unique solution $\phi^{n+1}$ of \eqref{eq:scheme}.
+\item[(iv)] With $\Jn^*=\Jn(\phi^{n+1})$,
+\begin{equation}\label{eq:PL}
+\tfrac12\nBi{v-\phi^{n+1}}^2\le\Jn(v)-\Jn^*\le\tfrac12\nB{\Rn(v)}^2,\qquad \nBi{v-\phi^{n+1}}\le\nB{\Rn(v)} .
+\end{equation}
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(i) Term by term, using $\partial_a G=\chi$, $\ip{(-\LapN)^{-1}(v-\phi^n)}{d}$ for the first term and the symmetry of $\langle\cdot,\cdot\rangle_1$,
+\begin{align*}
+j'(0)&=\Big(\tfrac1\tau(-\LapN)^{-1}(v-\phi^n)+\chi(v,\phi^n)-\tfrac34\eps^2\LapN v-\tfrac14\eps^2\LapN\phi^{n-1}+Av-\ell_n,\ d\Big)\\
+&=\Big(\tfrac1\tau(-\LapN)^{-1}(v-\phi^n)+\mu_n(v),d\Big),
+\end{align*}
+since $-\ell_n+Av=-\tilde\phi^n+A(v-2\phi^n+\phi^{n-1})$; as $\mean(d)=0$, $\mu_n$ may be replaced by $\Po\mu_n$. Differentiating again, $j''(t)=\frac1\tau\nrm d_{-1}^2+\frac34\eps^2\nrm{\gradN d}^2+A\nrm d^2+\ip{\chi_a(v+td,\phi^n)d}{d}$, and $\chi_a\ge0$ by \eqref{eq:G}.
+(ii) Taylor's formula $j(1)=j(0)+j'(0)+\int_0^1(1-t)j''(t)\,dt$ and (i).
+(iii) By \cref{lem:Jlower}, $\Jn(v)\to\infty$ as $\nrm{\gradN v}\to\infty$ in the finite-dimensional affine space $\Vn$; by (ii) $\Jn$ is strictly convex. The minimizer is the unique critical point, $\Rn=0$, i.e.\ \eqref{eq:scheme}.
+(iv) (ii) with $(v,w)\to(\phi^{n+1},v)$ gives the left inequality. (ii) with $w=\phi^{n+1}$, \eqref{eq:duality} and $xy\le\frac12x^2+\frac12y^2$ give $\Jn^*\ge\Jn(v)-\nB{\Rn(v)}\nBi{\phi^{n+1}-v}+\frac12\nBi{\phi^{n+1}-v}^2\ge\Jn(v)-\frac12\nB{\Rn(v)}^2$. Combining both, $\nBi{v-\phi^{n+1}}\le\nB{\Rn(v)}$.
+\end{proof}
+
+\begin{lemma}\label{lem:Jlower}
+For $a,b,\ell\in\R$,
+\begin{equation}\label{eq:quartic}
+G(a,b)-\tfrac{a^4}{32}+\tfrac{b^4}{4}=\Big(\tfrac{a^2}{4\sqrt2}+\tfrac{\sqrt2\,ab}{6}\Big)^2+b^2\Big(\tfrac5{72}a^2+\tfrac14ab+\tfrac14b^2\Big)\ge0,\qquad \tfrac{a^4}{32}-\ell a\ge-\tfrac32|\ell|^{4/3}.
+\end{equation}
+Consequently, with $C_{J,n}=\big(\frac14(\phi^n)^4+\frac32|\ell_n|^{4/3},1\big)+\frac{\eps^2}{8}\nrm{\gradN\phi^{n-1}}^2$,
+\begin{equation}\label{eq:sublevel-linf}
+\Jn(v)\ge\tfrac{\eps^2}{4}\nrm{\gradN v}^2-C_{J,n},\qquad \Jn(v)\le\bar J\ \Rightarrow\ \nrm v_\infty\le|\mean(\phi^n)|+\tfrac{2C_N}{\eps}\big(\bar J+C_{J,n}\big)^{1/2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Expanding the square, $(\frac{a^2}{4\sqrt2}+\frac{\sqrt2ab}{6})^2=\frac{a^4}{32}+\frac{a^3b}{12}+\frac{a^2b^2}{18}$, and $\frac18-\frac1{18}=\frac5{72}$, which proves the identity in \eqref{eq:quartic}; the quadratic form $\frac5{72}x^2+\frac14x+\frac14$ has discriminant $\frac1{16}-\frac5{72}=-\frac1{144}<0$. The scalar function $a\mapsto\frac{a^4}{32}-\ell a$ is minimal at $a^3=8\ell$, with value $\frac12|\ell|^{4/3}-2|\ell|^{4/3}$. In \eqref{eq:J}, $\frac{\eps^2}4\langle\phi^{n-1},v\rangle_1\ge-\frac{\eps^2}8(\nrm{\gradN v}^2+\nrm{\gradN\phi^{n-1}}^2)$, the remaining terms are nonnegative, and $\frac38-\frac18=\frac14$. For the last claim apply \cref{lem:discrete}(c) to $v-\mean(v)$.
+\end{proof}
+
+\subsection{Secant calculus and a spectral bound}
+For $a,b,c\in\R$,
+\begin{equation}\label{eq:secantD}
+\begin{gathered}
+\chi(a,b)-\chi(c,b)=D(a,c;b)(a-c),\\
+D(a,c;b)=\tfrac14\big(a^2+ac+c^2+b(a+c)+b^2\big)=\tfrac18\big[(a+c)^2+(a+b)^2+(b+c)^2\big],
+\end{gathered}
+\end{equation}
+which follows from $a^3-c^3=(a-c)(a^2+ac+c^2)$ and $a^2-c^2=(a-c)(a+c)$. If $|a|,|b|,|c|\le M$, then
+\begin{equation}\label{eq:Dbound}
+0\le D(a,c;b)\le\tfrac18\cdot3\cdot(2M)^2=\tfrac32M^2,\qquad 0\le\chi_a(a,b)=D(a,a;b)\le\tfrac32M^2 .
+\end{equation}
+Set
+\begin{equation}\label{eq:q}
+q(M)=\tfrac32M^2\theta_N .
+\end{equation}
+
+\begin{lemma}\label{lem:spectral}
+Let $0\le D\in\Vh$ with $\nrm D_\infty\le\frac32M^2$ and $T=\Bo\Po D:\Vo\to\Vo$. Then $T$ is self-adjoint and positive semi-definite in $\ip{\Bo^{-1}\cdot}{\cdot}$, its spectrum lies in $[0,q(M)]$, and for every polynomial $p$
+\[
+\nBi{p(T)u}\le\max_{\lambda\in[0,q(M)]}|p(\lambda)|\,\nBi u\qquad(u\in\Vo).
+\]
+\end{lemma}
+
+\begin{proof}
+For $u,w\in\Vo$, $\ip{\Bo^{-1}Tu}{w}=\ip{\Po Du}{w}=\ip{Du}{w}$, which is symmetric, and $0\le\ip{Du}u\le\frac32M^2\nrm u^2\le q(M)\nBi u^2$ by \eqref{eq:normequiv}. The spectral theorem in $(\Vo,\ip{\Bo^{-1}\cdot}\cdot)$ gives the rest.
+\end{proof}
+
+For $w\in\Vn$ and $d\in\Vo$ with $\nrm w_\infty,\nrm{\phi^n}_\infty\le M$, \cref{prop:convex}(i), \eqref{eq:Dbound} and \cref{lem:spectral} give
+\begin{equation}\label{eq:hessbound}
+\nBi d^2\le\frac{d^2}{dt^2}\Jn(w+td)\Big|_{t=0}\le\big(1+q(M)\big)\nBi d^2 .
+\end{equation}
+
+\subsection{An energy identity for arbitrary candidates}
+\begin{theorem}\label{thm:identity}
+For $v\in\Vn$ let $\delta=v-\phi^n$, $\delta_0=\phi^n-\phi^{n-1}$, $\delta_2=\delta-\delta_0$ and
+\begin{equation}\label{eq:dissipation}
+\Dn(v)=\tfrac1\tau\nrm\delta_{-1}^2+\big(\tfrac14+\tfrac A2\big)\nrm{\delta_2}^2+\tfrac{\eps^2}8\nrm{\gradN\delta_2}^2\ge0 .
+\end{equation}
+Then
+\begin{equation}\label{eq:identity}
+\Et(v,\phi^n)-\Et(\phi^n,\phi^{n-1})+\Dn(v)=\ip{\Rn(v)}{v-\phi^n}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Write $a=v$, $b=\phi^n$, $c=\phi^{n-1}$, so $\delta=a-b$, $\delta_0=b-c$, $\delta_2=a-2b+c$. By \eqref{eq:residual} and $\mean(\delta)=0$, $\ip{\Rn(v)}\delta=\frac1\tau\nrm\delta_{-1}^2+\ip{\mu_n(v)}\delta$. With the polarization identities
+\[
+\ip{x-y}{x}=\tfrac12\big(\nrm x^2-\nrm y^2+\nrm{x-y}^2\big),\qquad \ip{x+y}{x-y}=\nrm x^2-\nrm y^2,
+\]
+and their analogues for $\langle\cdot,\cdot\rangle_1$, the four parts of $\mu_n(v)$ give
+\begin{align*}
+\ip{\chi(a,b)}{a-b}&=\big(\tfrac14a^4-\tfrac14b^4,1\big),\\
+-\ip{\tfrac32b-\tfrac12c}{a-b}&=-\tfrac12\ip{a+b}{a-b}+\tfrac12\ip{\delta_2}{\delta}\\
+&=-\tfrac12\big(\nrm a^2-\nrm b^2\big)+\tfrac14\big(\nrm\delta^2-\nrm{\delta_0}^2+\nrm{\delta_2}^2\big),\\
+\eps^2\big\langle\tfrac34a+\tfrac14c,a-b\big\rangle_1&=\eps^2\big\langle\tfrac12(a+b)+\tfrac14\delta_2,a-b\big\rangle_1\\
+&=\tfrac{\eps^2}2\big(\nrm{\gradN a}^2-\nrm{\gradN b}^2\big)+\tfrac{\eps^2}8\big(\nrm{\gradN\delta}^2-\nrm{\gradN\delta_0}^2+\nrm{\gradN\delta_2}^2\big),\\
+A\ip{\delta_2}{\delta}&=\tfrac A2\big(\nrm\delta^2-\nrm{\delta_0}^2+\nrm{\delta_2}^2\big),
+\end{align*}
+where $\delta_2=\delta-\delta_0$ was used in the form $\ip{\delta_2}{\delta}=\frac12(\nrm\delta^2-\nrm{\delta_0}^2+\nrm{\delta_2}^2)$, and $\frac34a+\frac14c=\frac12(a+b)+\frac14(a-2b+c)$. Summing, $\ip{\mu_n(v)}\delta=E_N(a)-E_N(b)+(\frac14+\frac A2)(\nrm\delta^2-\nrm{\delta_0}^2)+\frac{\eps^2}8(\nrm{\gradN\delta}^2-\nrm{\gradN\delta_0}^2)+(\frac14+\frac A2)\nrm{\delta_2}^2+\frac{\eps^2}8\nrm{\gradN\delta_2}^2=\Et(a,b)-\Et(b,c)+\Dn(v)-\frac1\tau\nrm\delta_{-1}^2$.
+\end{proof}
+
+\begin{corollary}\label{cor:exactenergy}
+$\Et(\phi^{n+1},\phi^n)+\Dn(\phi^{n+1})=\Et(\phi^n,\phi^{n-1})$, and $\Dn(\phi^{n+1})=0$ iff $\phi^{n+1}=\phi^n=\phi^{n-1}$.
+\end{corollary}
+
+\begin{proof}
+$\Rn(\phi^{n+1})=0$ in \eqref{eq:identity}. If $\Dn=0$ then $\delta=0$ (since $\nrm\cdot_{-1}$ is a norm on $\Vo$) and $\delta_2=0$, hence $\delta_0=\delta-\delta_2=0$.
+\end{proof}

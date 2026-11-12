@@ -1,0 +1,32 @@
+/home/claude/paper/code/chsolver.py:72: RuntimeWarning: overflow encountered in multiply
+  return self.c * float(np.sum(m * (uh * np.conj(vh)).real))
+/home/claude/paper/code/chsolver.py:24: RuntimeWarning: overflow encountered in multiply
+  return 0.25 * (a * a + b * b) * (a + b)
+/usr/local/lib/python3.13/dist-packages/numpy/fft/_pocketfft.py:101: RuntimeWarning: invalid value encountered in rfft_n_even
+  return ufunc(a, fct, axes=[(axis,), (), (axis,)], out=out)
+linear_w1|practical 0.001 0.0 {'status': 'diverged', 'mean_it': 90.92857142857143, 'max_it': 300, 'fails': 3, 'nfft_per_step': 184.85714285714286, 'wall': 5.479181528091431, 'modE_increases': 0}
+relax_w05|practical 0.001 0.0 {'status': 'ok', 'mean_it': 11.07, 'max_it': 21, 'fails': 0, 'nfft_per_step': 25.14, 'wall': 59.01534605026245, 'modE_increases': 0}
+armijo|practical 0.001 0.0 {'status': 'ok', 'mean_it': 11.07, 'max_it': 21, 'fails': 0, 'nfft_per_step': 25.14, 'wall': 122.71141839027405, 'modE_increases': 0}
+newton|practical 0.001 0.0 {'status': 'ok', 'mean_it': 2.038, 'max_it': 3, 'fails': 0, 'nfft_per_step': 21.634, 'wall': 48.31069207191467, 'modE_increases': 0}
+linear_w1|practical 0.001 2.0 {'status': 'ok', 'mean_it': 8.174, 'max_it': 17, 'fails': 0, 'nfft_per_step': 19.348, 'wall': 50.452038526535034, 'modE_increases': 0}
+relax_w05|practical 0.001 2.0 {'status': 'ok', 'mean_it': 11.701, 'max_it': 21, 'fails': 0, 'nfft_per_step': 26.402, 'wall': 61.89039945602417, 'modE_increases': 0}
+armijo|practical 0.001 2.0 {'status': 'ok', 'mean_it': 11.701, 'max_it': 21, 'fails': 0, 'nfft_per_step': 26.402, 'wall': 128.78690433502197, 'modE_increases': 0}
+newton|practical 0.001 2.0 {'status': 'ok', 'mean_it': 2.076, 'max_it': 3, 'fails': 0, 'nfft_per_step': 17.63, 'wall': 41.17729663848877, 'modE_increases': 0}
+/usr/local/lib/python3.13/dist-packages/numpy/_core/fromnumeric.py:83: RuntimeWarning: invalid value encountered in reduce
+  return ufunc.reduce(obj, axis, dtype, out, **passkwargs)
+linear_w1|practical 0.004 0.0 {'status': 'diverged', 'mean_it': 79.5, 'max_it': 300, 'fails': 1, 'nfft_per_step': 162.0, 'wall': 0.9767169952392578, 'modE_increases': 0}
+relax_w05|practical 0.004 0.0 {'status': 'ok', 'mean_it': 21.62, 'max_it': 95, 'fails': 0, 'nfft_per_step': 46.24, 'wall': 17.871678352355957, 'modE_increases': 0}
+armijo|practical 0.004 0.0 {'status': 'ok', 'mean_it': 10.944, 'max_it': 17, 'fails': 0, 'nfft_per_step': 24.888, 'wall': 17.248286962509155, 'modE_increases': 0}
+newton|practical 0.004 0.0 {'status': 'ok', 'mean_it': 2.18, 'max_it': 4, 'fails': 0, 'nfft_per_step': 27.472, 'wall': 13.12151026725769, 'modE_increases': 0}
+linear_w1|practical 0.004 2.0 {'status': 'ok', 'mean_it': 16.02, 'max_it': 80, 'fails': 0, 'nfft_per_step': 35.04, 'wall': 14.00479507446289, 'modE_increases': 0}
+relax_w05|practical 0.004 2.0 {'status': 'ok', 'mean_it': 11.172, 'max_it': 17, 'fails': 0, 'nfft_per_step': 25.344, 'wall': 10.183072090148926, 'modE_increases': 0}
+armijo|practical 0.004 2.0 {'status': 'ok', 'mean_it': 11.172, 'max_it': 17, 'fails': 0, 'nfft_per_step': 25.344, 'wall': 18.841975688934326, 'modE_increases': 0}
+newton|practical 0.004 2.0 {'status': 'ok', 'mean_it': 2.228, 'max_it': 3, 'fails': 0, 'nfft_per_step': 19.968, 'wall': 10.778806447982788, 'modE_increases': 0}
+linear_w1|practical 0.016 0.0 {'status': 'diverged', 'mean_it': 107.33333333333333, 'max_it': 300, 'fails': 1, 'nfft_per_step': 217.66666666666666, 'wall': 0.9273815155029297, 'modE_increases': 0}
+relax_w05|practical 0.016 0.0 {'status': 'diverged', 'mean_it': 156.5, 'max_it': 300, 'fails': 2, 'nfft_per_step': 316.0, 'wall': 1.7051587104797363, 'modE_increases': 0}
+armijo|practical 0.016 0.0 {'status': 'ok', 'mean_it': 16.838709677419356, 'max_it': 24, 'fails': 0, 'nfft_per_step': 36.67741935483871, 'wall': 6.7800374031066895, 'modE_increases': 0}
+newton|practical 0.016 0.0 {'status': 'ok', 'mean_it': 2.629032258064516, 'max_it': 4, 'fails': 0, 'nfft_per_step': 38.70967741935484, 'wall': 3.7061564922332764, 'modE_increases': 0}
+linear_w1|practical 0.016 2.0 {'status': 'diverged', 'mean_it': 88.86666666666666, 'max_it': 300, 'fails': 3, 'nfft_per_step': 180.73333333333332, 'wall': 3.612293004989624, 'modE_increases': 0}
+relax_w05|practical 0.016 2.0 {'status': 'ok', 'mean_it': 10.53225806451613, 'max_it': 13, 'fails': 0, 'nfft_per_step': 24.06451612903226, 'wall': 2.181408405303955, 'modE_increases': 0}
+armijo|practical 0.016 2.0 {'status': 'ok', 'mean_it': 10.53225806451613, 'max_it': 13, 'fails': 0, 'nfft_per_step': 24.06451612903226, 'wall': 4.340108633041382, 'modE_increases': 0}
+newton|practical 0.016 2.0 {'status': 'ok', 'mean_it': 2.3225806451612905, 'max_it': 3, 'fails': 0, 'nfft_per_step': 21.70967741935484, 'wall': 2.623668670654297, 'modE_increases': 0}

@@ -1,0 +1,121 @@
+\appendix
+\section{Auxiliary proofs and implementation}\label{app}
+
+\subsection{Discrete Sobolev inequality}\label{app:sobolev}
+\begin{proof}[Proof of \cref{lem:discrete}(c)]
+For $f\in\Vo$ and every grid point,
+\[
+|f_{ij}|\le\sum_{k\ne0}|\hat f_k|\le\Big(\sum_ks_k|\hat f_k|^2\Big)^{1/2}\Big(\sum_{k\ne0}s_k^{-1}\Big)^{1/2}=\frac{\nrm{\gradN f}}{L}\cdot\frac L{2\pi}\Big(\sum_{k\ne0}|k|^{-2}\Big)^{1/2}.
+\] The shell $\max(|k_1|,|k_2|)=j$ contains at most $8j$ indices, each with $|k|\ge j$, so
+\[
+\sum_{k\in K_N\setminus\{0\}}|k|^{-2}\le\sum_{j=1}^{N/2}\frac{8j}{j^2}=8\sum_{j=1}^{N/2}\frac1j\le8\Big(1+\ln\frac N2\Big)\le8(1+\ln N),
+\]
+hence $\nrm f_\infty\le\frac{\sqrt8}{2\pi}(1+\ln N)^{1/2}\nrm{\gradN f}=C_N\nrm{\gradN f}$. In three dimensions the shell has at most $24j^2+2$ indices and the sum is $O(N)$.
+\end{proof}
+
+\subsection{Discrete Gronwall inequality}
+\begin{lemma}\label{lem:gronwall}
+If $y_k\ge0$ and $y_k\le F+\Lambda\tau\sum_{j=0}^{k-1}y_j$ for $0\le k\le K$, then $y_k\le F(1+\Lambda\tau)^k\le Fe^{\Lambda t_k}$.
+\end{lemma}
+
+\begin{proof}
+$Z_k=F+\Lambda\tau\sum_{j<k}y_j$ satisfies $Z_0=F$ and $Z_{k+1}=Z_k+\Lambda\tau y_k\le(1+\Lambda\tau)Z_k$; and $y_k\le Z_k$.
+\end{proof}
+
+\subsection{Projection and interpolation estimates}\label{app:interp}
+\begin{lemma}\label{lem:interp}
+For $L$-periodic $g$ and $m\ge1$, with $C$ depending on $L$ and $m$ only,
+\[
+\nrm{I_Ng}_{H^1}\le C\nrm g_{H^2},\qquad \nrm{g-\mathsf P_Ng}_{H^1}+\nrm{g-I_Ng}_{H^1}\le Ch^m\nrm g_{H^{m+1}} .
+\]
+\end{lemma}
+
+\begin{proof}
+Scale $L=2\pi$ and write $\langle q\rangle=(1+|q|^2)^{1/2}$, $q\in\Z^2$. The interpolant has $\widehat{I_Ng}_k=\sum_{\ell\in\Z^2}\hat g_{k+N\ell}$, $k\in K_N$. For $k\in K_N$ and $\ell\ne0$, $|k+N\ell|\ge N|\ell|_\infty-\frac N2\ge\frac N2|\ell|_\infty$, so by weighted Cauchy--Schwarz
+\begin{gather*}
+\langle k\rangle^2\Big|\sum_\ell\hat g_{k+N\ell}\Big|^2\le\Big\{\langle k\rangle^2\sum_\ell\langle k+N\ell\rangle^{-4}\Big\}\sum_\ell\langle k+N\ell\rangle^4|\hat g_{k+N\ell}|^2,\\
+\Big\{\langle k\rangle^2\sum_\ell\langle k+N\ell\rangle^{-4}\Big\}\le1+\big(1+\tfrac{N^2}2\big)\tfrac{16}{N^4}\sum_{\ell\ne0}|\ell|_\infty^{-4}\le C .
+\end{gather*}
+Summing over the disjoint classes $k+N\Z^2$ gives the first bound. Next, $g-\mathsf P_Ng$ contains only $|q|_\infty\ge\frac N2$, so $\nrm{g-\mathsf P_Ng}_{H^1}^2\le(\frac N2)^{-2m}\sum\langle q\rangle^{2m+2}|\hat g_q|^2$. Since $I_N\mathsf P_Ng=\mathsf P_Ng$, $g-I_Ng=(g-\mathsf P_Ng)-I_N(g-\mathsf P_Ng)$, and with exponent $m+1$,
+\[
+\nrm{I_N(g-\mathsf P_Ng)}_{H^1}^2\le\sum_{k\in K_N}\Big\{\langle k\rangle^2\!\!\sum_{q\equiv k,\,|q|_\infty\ge N/2}\!\!\langle q\rangle^{-2(m+1)}\Big\}\sum_{q\equiv k}\langle q\rangle^{2(m+1)}|\hat g_q|^2\le CN^{-2m}\nrm g_{H^{m+1}}^2,
+\]
+because $\{\cdot\}\le(1+\frac{N^2}2)(\frac N2)^{-2(m+1)}\sum_{\ell}\max(1,|\ell|_\infty)^{-2(m+1)}\le CN^{-2m}$ for $m\ge1$.
+\end{proof}
+
+\subsection{Proof of \cref{lem:consistency}}\label{app:consistency}
+Let $\bar t=\bar t_n=t_{n+1/2}$, $u_j=u(t_j)$, and for $g\in C^3$ use $g(\bar t+\vartheta)=g+\vartheta g'+\frac{\vartheta^2}2g''+\mathcal T_3(\vartheta)$, $\mathcal T_3(\vartheta)=\frac12\int_{\bar t}^{\bar t+\vartheta}(\bar t+\vartheta-r)^2g'''(r)\,dr$, $|\mathcal T_3(\vartheta)|\le\frac{|\vartheta|^3}6\sup|g'''|$. With $t_{n+1}=\bar t+\frac\tau2$, $t_n=\bar t-\frac\tau2$, $t_{n-1}=\bar t-\frac{3\tau}2$, the coefficients of $\vartheta^0,\vartheta^1,\vartheta^2$ give
+\begin{align*}
+\tfrac1\tau(u_{n+1}-u_n)-u_t(\bar t)&=\tfrac1\tau\big[\mathcal T_3(\tfrac\tau2)-\mathcal T_3(-\tfrac\tau2)\big],&&|\cdot|\le\tfrac{\tau^2}{24}\sup|u_{ttt}|,\\
+c_1:=\tfrac34u_{n+1}+\tfrac14u_{n-1}-u(\bar t)&=\tfrac38\tau^2u_{tt}(\bar t)+\varrho_1,&&|\varrho_1|\le\tfrac5{32}\tau^3\sup|u_{ttt}|,\\
+c_2:=\tfrac32u_n-\tfrac12u_{n-1}-u(\bar t)&=-\tfrac38\tau^2u_{tt}(\bar t)+\varrho_2,&&|\varrho_2|\le\tfrac5{16}\tau^3\sup|u_{ttt}|,\\
+c_3:=u_{n+1}-2u_n+u_{n-1}&=\tau^2u_{tt}(\bar t)+\varrho_3,&&|\varrho_3|\le\tfrac58\tau^3\sup|u_{ttt}|,
+\end{align*}
+since, e.g.\ for $c_1$: $\frac34\cdot\frac\tau2+\frac14\cdot(-\frac{3\tau}2)=0$, $\frac12(\frac34\cdot\frac{\tau^2}4+\frac14\cdot\frac{9\tau^2}4)=\frac38\tau^2$ and $\frac16(\frac34\cdot\frac18+\frac14\cdot\frac{27}8)\tau^3=\frac5{32}\tau^3$; similarly for $c_2$ ($-\frac34\tau+\frac34\tau=0$, $\frac12(\frac38-\frac98)\tau^2$) and $c_3$ ($\frac\tau2+\tau-\frac{3\tau}2=0$, $\frac12(\frac14-\frac12+\frac94)\tau^2$). For the secant, with $\bar u=\frac12(u_{n+1}+u_n)=u+\frac{\tau^2}8u_{tt}+O(\tau^3)$ and $d=\frac12(u_{n+1}-u_n)=\frac\tau2u_t+O(\tau^3)$,
+\[
+\chi(u_{n+1},u_n)=\tfrac14(2\bar u^2+2d^2)(2\bar u)=\bar u^3+\bar ud^2=u^3+\tau^2\big(\tfrac38u^2u_{tt}+\tfrac14uu_t^2\big)+O(\tau^3)
+\]
+in $H^{m+2}$, which is an algebra. Let $\tilde\mu=\chi(u_{n+1},u_n)-\frac32u_n+\frac12u_{n-1}-\eps^2\Delta(\frac34u_{n+1}+\frac14u_{n-1})+Ac_3$. Then
+\begin{equation}\label{eq:mutilde}
+\tilde\mu-\mu(u(\bar t))=(\chi-u^3)-c_2-\eps^2\Delta c_1+Ac_3=\tau^2W(\bar t)+O(\tau^3)\quad\text{in }H^{m+2}.
+\end{equation}
+Since $u_t=\Delta\mu(u)$, $\mathsf P_N\Delta=\Delta\mathsf P_N$, and $\LapN=\Delta$ on grid values of $\mathsf P_N$-images (no Nyquist modes),
+\[
+\zeta^n=\zeta_1^n-\Delta\mathsf P_N\big[\tilde\mu-\mu(u(\bar t))\big]+\sigma^n,\qquad \sigma^n=\Delta\mathsf P_Ng-\LapN\chi(U^{n+1},U^n),\quad g=\chi(u_{n+1},u_n),
+\]
+the linear parts of $\tilde\mu$ cancelling exactly. With $\nrm{\Delta w}_{-1}=\nrm{\nabla w}$, \eqref{eq:mutilde} gives the $\tau^2W$ term and $O(\tau^3)$. For $\sigma^n$ identify grid functions with trigonometric interpolants $I_N$, so that $\nrm{\gradN w}=\nrm{\nabla I_Nw}$, and write
+\[
+\sigma^n=\Delta(\mathsf P_Ng-I_Ng)-\Delta I_N\big[\chi(\mathsf P_Nu_{n+1},\mathsf P_Nu_n)-g\big].
+\]
+By \cref{lem:interp} (see also \cite[\S5.1]{CHQZ2006}, \cite{GottliebWang2012}),
+\[
+\nrm{\sigma^n}_{-1}\le Ch^m\nrm g_{H^{m+1}}+C\nrm{\chi(\mathsf P_Nu_{n+1},\mathsf P_Nu_n)-g}_{H^2}\le Ch^m\big(\nrm g_{H^{m+1}}+\nrm u_{L^\infty(H^{m+2})}\big).
+\]
+For $n=0$, $u_{-1}$ is replaced by $u_0$, and $c_1=\frac34(u_1-u(\bar t))+\frac14(u_0-u(\bar t))$, $c_2=u_0-u(\bar t)$, $c_3=u_1-u_0$ are $O(\tau)$. Finally $\mean(U^{n+1}-U^n)=0$ by conservation of mass and $\mean(\LapN\cdot)=0$, so $\zeta^n\in\Vo$.
+\qed
+
+\subsection{Proof of \cref{prop:linfixed}}\label{app:linfixed}
+At $\phi=0$, $\partial_a\chi=\partial_b\chi=0$, so the linearised step on the mode $s$ reads, with $\mu=-(\frac32a_n-\frac12a_{n-1})+\eps^2s(\frac34a_*+\frac14a_{n-1})+A(a_*-2a_n+a_{n-1})$ and $a_*-a_n=-\tau s\mu$,
+\begin{equation}\label{eq:PQ}
+\begin{gathered}a_*=P(\tau)a_n+Q(\tau)a_{n-1},\qquad d_s=As+\tfrac34\eps^2s^2,\\ P=\frac{1+\tau(2A+\frac32)s}{1+\tau d_s},\qquad Q=-\frac{\tau\{(A+\frac12)s+\frac14\eps^2s^2\}}{1+\tau d_s}.\end{gathered}
+\end{equation}
+The linearised map $\Gn$ does not depend on its argument ($\chi$ contributes nothing), so $\Gn(v)=a_*$ and $K$ relaxed sweeps from $v^0=2a_n-a_{n-1}$ give $v^K-a_*=r(v^0-a_*)$, i.e.
+\[
+a_{n+1}=(1-r)a_*+r(2a_n-a_{n-1}).
+\]
+With $a_n=g^n$ the characteristic equation is
+\begin{equation}\label{eq:charlin}
+F(g,\tau)=g^2-\{(1-r)P(\tau)+2r\}g-(1-r)Q(\tau)+r=0,\qquad F(g,0)=(g-1)(g-r).
+\end{equation}
+Since $0\le r<1$ the roots at $\tau=0$ are simple, and the implicit function theorem gives analytic branches through $1$ and $r$. With $p_s=(A+\frac32)s-\frac34\eps^2s^2$ and $q_s=-(A+\frac12)s-\frac14\eps^2s^2$,
+\[
+P=1+p_s\tau-d_sp_s\tau^2+O(\tau^3),\qquad Q=q_s\tau-d_sq_s\tau^2+O(\tau^3),\qquad p_s+q_s=\lambda,\qquad p_s-d_s=\tfrac32\lambda .
+\]
+Inserting $g=1+\alpha\tau+\gamma\tau^2+O(\tau^3)$ into \eqref{eq:charlin}, the coefficient of $\tau^0$ vanishes, that of $\tau$ is $(1-r)\alpha-(1-r)(p_s+q_s)$, and that of $\tau^2$ is
+\begin{align*}
+&(1-r)\gamma+\alpha^2-(1-r)\alpha p_s+(1-r)d_s(p_s+q_s)\\
+&\qquad=(1-r)\gamma+\lambda^2-(1-r)\lambda(p_s-d_s)=(1-r)\gamma+\lambda^2-\tfrac32(1-r)\lambda^2 .
+\end{align*}
+Hence $\alpha=\lambda$, $\gamma=\frac32\lambda^2-\frac{\lambda^2}{1-r}=(\frac12-\frac r{1-r})\lambda^2$, and $\log(1+\alpha\tau+\gamma\tau^2)=\alpha\tau+(\gamma-\frac12\alpha^2)\tau^2+O(\tau^3)=\lambda\tau-\frac r{1-r}\lambda^2\tau^2+O(\tau^3)$. Raising to the power $T/\tau$ gives the last claim.\qed
+
+\subsection{Fourier-space formulas}\label{app:fourier}
+With $\delta=v-\phi^n$, $\delta_2=v-2\phi^n+\phi^{n-1}$, $\hat\chi=\widehat{\chi(v,\phi^n)}$ (one forward transform), and sums over $k\ne0$:
+\begin{align*}
+\hat p_k&=\hat v_k-\lambda_k^{-1}(\hat f_{n,k}-s_k\hat\chi_k),\qquad \widehat{\Rn(v)}_k=\frac{\lambda_k}{s_k}\hat p_k,\qquad \hat f_{n,k}=\tfrac1\tau\hat\phi^n_k+s_k\hat\ell_{n,k}-\tfrac14\eps^2s_k^2\hat\phi^{n-1}_k,\\
+\nB{\Rn}^2&=L^2\sum\frac{\lambda_k}{s_k}|\hat p_k|^2,\qquad \nrm{\Rn}^2=L^2\sum\frac{\lambda_k^2}{s_k^2}|\hat p_k|^2,\qquad \ip{\Rn}{\delta}=L^2\sum\frac{\lambda_k}{s_k}\,\mathrm{Re}\big(\hat p_k\overline{\hat\delta_k}\big),\\
+\Dn(v)&=L^2\sum\Big[\frac{|\hat\delta_k|^2}{\tau s_k}+\Big(\tfrac14+\tfrac A2+\tfrac{\eps^2}8s_k\Big)|\hat\delta_{2,k}|^2\Big],\qquad \nBi d^2=L^2\sum\frac{\lambda_k}{s_k}|\hat d_k|^2 .
+\end{align*}
+The relaxed and Armijo updates are $\hat v\leftarrow\hat v-\omega\hat p$, followed by one inverse transform; the Armijo trial values use \eqref{eq:increment} with $d=-\omega p$, i.e.\ $\ip{\Rn}{d}=-\omega\nB{\Rn}^2$, $\frac12\nBi d^2=\frac{\omega^2}2\nB{\Rn}^2$ and a pointwise quartic sum, without transforms. A Newton--CG product $Hw=w+\Bo\Po(\chi_a(v,\phi^n)w)$ costs one transform pair: $\widehat{Hw}_k=\hat w_k+\frac{s_k}{\lambda_k}\widehat{(\chi_aw)}_k$, $k\ne0$. For real FFTs the sums over $K_N$ are taken with weight $2$ on the non-self-conjugate half-plane columns.
+
+\subsection{Geometric observables}\label{app:observables}
+\emph{Components.} $\{\phi>0\}$ is labelled with 4-connectivity on the $N\times N$ array; labels touching across $i=0\leftrightarrow N-1$ or $j=0\leftrightarrow N-1$ are merged (union--find).
+
+\emph{Displacement proxy.} Let $\psi(r)=\tanh(r/(\sqrt2\eps))$, and let $b=\psi(r)$, $a=\psi(r-\nu(\sigma))$ in normal coordinates $(\sigma,r)$ near $\Gamma_b$, $|\nu|$ small. Then $a-b=-\nu(\sigma)\psi'(r)+O(\nu^2\psi'')$ and, with $dx=(1+\kappa r)\,dr\,d\sigma$,
+\[
+\nrm{a-b}_{L^1}=\int_{\Gamma_b}|\nu|\int_\R|\psi'(r)|(1+\kappa r)\,dr\,d\sigma+O\big(\eps^{-1}\nrm\nu_\infty^2\big)=2\int_{\Gamma_b}|\nu|\,d\sigma+O\big(\eps^{-1}\nrm\nu_\infty^2\big),
+\]
+since $\int_\R\psi'=\psi(\infty)-\psi(-\infty)=2$, $\int_\R r\psi'(r)\,dr=0$ ($\psi'$ even) and $\int_\R|\psi''|=O(\eps^{-1})$. Hence $\delta_\Gamma(a,b)=|\Gamma_b|^{-1}\int_{\Gamma_b}|\nu|\,d\sigma$ to leading order. For a rigid shift $z$ of circles, $\nu=z\cdot n$ and $|\Gamma|^{-1}\int|z\cdot n|=|z|\frac1{2\pi}\int_0^{2\pi}|\cos\vartheta|\,d\vartheta=\frac2\pi|z|$; for three droplets and $|z|=0.01$ the code returns $0.00636$ against $\frac2\pi\cdot0.01=0.00637$. Bulk differences ($|a|,|b|\approx1$ away from $\Gamma$) and profile changes add to $\nrm{a-b}_{L^1}$, which is why $\delta_\Gamma$ is used as a defined proxy only. $|\Gamma_b|$ is the length of the marching-squares zero contour.
+
+\emph{Radii.} For each closed marching-squares zero contour with vertices $(x_i,y_i)$, \[
+A_s=\tfrac12\sum_ic_i,\quad \mathcal A=|A_s|,\quad \text{centroid}=\tfrac1{6A_s}\sum_i(x_i+x_{i+1},\,y_i+y_{i+1})\,c_i,\quad c_i=x_iy_{i+1}-x_{i+1}y_i.
+\] Droplet $j$ is matched to the closed contour whose centroid is nearest to its previous centroid, if closer than $0.15$; then $R_j=(\mathcal A/\pi)^{1/2}$ and the centroid is updated; otherwise the droplet is recorded as disappeared at that step.

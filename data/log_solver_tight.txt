@@ -1,0 +1,30 @@
+/home/claude/paper/code/chsolver.py:72: RuntimeWarning: overflow encountered in multiply
+  return self.c * float(np.sum(m * (uh * np.conj(vh)).real))
+/home/claude/paper/code/chsolver.py:24: RuntimeWarning: overflow encountered in multiply
+  return 0.25 * (a * a + b * b) * (a + b)
+/usr/local/lib/python3.13/dist-packages/numpy/fft/_pocketfft.py:101: RuntimeWarning: invalid value encountered in rfft_n_even
+  return ufunc(a, fct, axes=[(axis,), (), (axis,)], out=out)
+linear_w1|tight 0.001 0.0 {'status': 'diverged', 'mean_it': 111.07142857142857, 'max_it': 300, 'fails': 4, 'nfft_per_step': 225.14285714285714, 'wall': 3.8348045349121094, 'modE_increases': 0}
+relax_w05|tight 0.001 0.0 {'status': 'ok', 'mean_it': 22.412, 'max_it': 33, 'fails': 0, 'nfft_per_step': 47.824, 'wall': 61.289923906326294, 'modE_increases': 0}
+armijo|tight 0.001 0.0 {'status': 'ok', 'mean_it': 22.412, 'max_it': 33, 'fails': 0, 'nfft_per_step': 47.824, 'wall': 186.5626826286316, 'modE_increases': 0}
+newton|tight 0.001 0.0 {'status': 'ok', 'mean_it': 3.445, 'max_it': 5, 'fails': 0, 'nfft_per_step': 35.582, 'wall': 63.499213218688965, 'modE_increases': 0}
+linear_w1|tight 0.001 2.0 {'status': 'ok', 'mean_it': 18.791, 'max_it': 30, 'fails': 0, 'nfft_per_step': 40.582, 'wall': 52.81391000747681, 'modE_increases': 0}
+relax_w05|tight 0.001 2.0 {'status': 'ok', 'mean_it': 23.079, 'max_it': 33, 'fails': 0, 'nfft_per_step': 49.158, 'wall': 63.94682502746582, 'modE_increases': 0}
+armijo|tight 0.001 2.0 {'status': 'ok', 'mean_it': 23.079, 'max_it': 33, 'fails': 0, 'nfft_per_step': 49.158, 'wall': 187.63401412963867, 'modE_increases': 0}
+newton|tight 0.001 2.0 {'status': 'ok', 'mean_it': 3.236, 'max_it': 5, 'fails': 0, 'nfft_per_step': 26.858, 'wall': 49.372406005859375, 'modE_increases': 0}
+linear_w1|tight 0.004 0.0 {'status': 'diverged', 'mean_it': 86.75, 'max_it': 300, 'fails': 1, 'nfft_per_step': 176.5, 'wall': 0.7939403057098389, 'modE_increases': 0}
+relax_w05|tight 0.004 0.0 {'status': 'ok', 'mean_it': 83.72, 'max_it': 231, 'fails': 0, 'nfft_per_step': 170.44, 'wall': 49.30974864959717, 'modE_increases': 0}
+armijo|tight 0.004 0.0 {'status': 'ok', 'mean_it': 28.76, 'max_it': 35, 'fails': 0, 'nfft_per_step': 60.52, 'wall': 58.217151165008545, 'modE_increases': 0}
+newton|tight 0.004 0.0 {'status': 'ok', 'mean_it': 4.376, 'max_it': 6, 'fails': 0, 'nfft_per_step': 53.584, 'wall': 20.24545669555664, 'modE_increases': 0}
+linear_w1|tight 0.004 2.0 {'status': 'ok', 'mean_it': 41.012, 'max_it': 180, 'fails': 0, 'nfft_per_step': 85.024, 'wall': 25.048935651779175, 'modE_increases': 0}
+relax_w05|tight 0.004 2.0 {'status': 'ok', 'mean_it': 26.848, 'max_it': 33, 'fails': 0, 'nfft_per_step': 56.696, 'wall': 17.264896869659424, 'modE_increases': 0}
+armijo|tight 0.004 2.0 {'status': 'ok', 'mean_it': 26.852, 'max_it': 33, 'fails': 0, 'nfft_per_step': 56.704, 'wall': 54.492703914642334, 'modE_increases': 0}
+newton|tight 0.004 2.0 {'status': 'ok', 'mean_it': 4.044, 'max_it': 5, 'fails': 0, 'nfft_per_step': 34.336, 'wall': 15.51783299446106, 'modE_increases': 0}
+linear_w1|tight 0.016 0.0 {'status': 'diverged', 'mean_it': 130.0, 'max_it': 300, 'fails': 1, 'nfft_per_step': 263.0, 'wall': 0.8700900077819824, 'modE_increases': 0}
+relax_w05|tight 0.016 0.0 {'status': 'diverged', 'mean_it': 166.25, 'max_it': 300, 'fails': 2, 'nfft_per_step': 335.5, 'wall': 1.4275026321411133, 'modE_increases': 0}
+armijo|tight 0.016 0.0 {'status': 'ok', 'mean_it': 53.79032258064516, 'max_it': 72, 'fails': 0, 'nfft_per_step': 110.58064516129032, 'wall': 26.409610271453857, 'modE_increases': 0}
+newton|tight 0.016 0.0 {'status': 'ok', 'mean_it': 5.548387096774194, 'max_it': 6, 'fails': 0, 'nfft_per_step': 81.2258064516129, 'wall': 7.338619947433472, 'modE_increases': 0}
+linear_w1|tight 0.016 2.0 {'status': 'diverged', 'mean_it': 138.06666666666666, 'max_it': 300, 'fails': 4, 'nfft_per_step': 279.1333333333333, 'wall': 4.623600006103516, 'modE_increases': 0}
+relax_w05|tight 0.016 2.0 {'status': 'ok', 'mean_it': 30.193548387096776, 'max_it': 33, 'fails': 0, 'nfft_per_step': 63.38709677419355, 'wall': 4.898230314254761, 'modE_increases': 0}
+armijo|tight 0.016 2.0 {'status': 'ok', 'mean_it': 30.193548387096776, 'max_it': 33, 'fails': 0, 'nfft_per_step': 63.38709677419355, 'wall': 15.177481889724731, 'modE_increases': 0}
+newton|tight 0.016 2.0 {'status': 'ok', 'mean_it': 4.838709677419355, 'max_it': 6, 'fails': 0, 'nfft_per_step': 41.38709677419355, 'wall': 4.421630859375, 'modE_increases': 0}

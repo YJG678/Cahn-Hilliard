@@ -1,0 +1,75 @@
+\documentclass[11pt]{amsart}
+\usepackage[margin=1.15in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{graphicx,booktabs,multirow}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[capitalize,nameinlink]{cleveref}
+\usepackage{xcolor}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+\crefname{algocf}{Algorithm}{Algorithms}
+
+% ---------- notation ----------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\nrm}[1]{\lVert #1\rVert}
+\newcommand{\ip}[2]{(#1,#2)}
+\newcommand{\gradN}{\nabla_{\!N}}
+\newcommand{\LapN}{\Delta_N}
+\newcommand{\Vh}{\mathcal{V}}
+\newcommand{\Vo}{\mathring{\mathcal{V}}}
+\newcommand{\Vn}{\mathcal{V}_n}
+\newcommand{\LA}{\mathcal{L}_A}
+\newcommand{\Bo}{\mathcal{B}}
+\newcommand{\Rn}{\mathcal{R}_n}
+\newcommand{\Jn}{\mathcal{J}_n}
+\newcommand{\Gn}{\mathcal{G}_n}
+\newcommand{\Dn}{\mathcal{D}_n}
+\newcommand{\Et}{\widetilde{E}}
+\newcommand{\nB}[1]{\lVert #1\rVert_{\Bo}}
+\newcommand{\nBi}[1]{\lVert #1\rVert_{\Bo^{-1}}}
+\newcommand{\Po}{\mathsf{P}_0}
+\DeclareMathOperator{\mean}{mean}
+
+\title[Inner iterations for a second-order Cahn--Hilliard scheme]{Solving a second-order energy-stable Cahn--Hilliard scheme by preconditioned descent: global convergence, computable stopping rules, and error estimates}
+
+\author{[Author names withheld for review preparation]}
+\address{[Affiliations]}
+\email{[e-mail]}
+
+\date{\today}
+
+
+\renewcommand{\topfraction}{0.9}\renewcommand{\bottomfraction}{0.6}\renewcommand{\textfraction}{0.1}\renewcommand{\floatpagefraction}{0.75}\setcounter{topnumber}{2}\setcounter{totalnumber}{3}
+\begin{document}
+
+\begin{abstract}
+Second-order, unconditionally energy-stable time discretizations of the Cahn--Hilliard equation are implicit, and in practice their nonlinear step equations are solved only approximately: a few sweeps of a constant-coefficient ``linear iteration'' are performed and the last iterate is accepted. The stability and accuracy statements available for these schemes, however, refer to the exact solution of each step. We study this gap for the modified Crank--Nicolson Fourier pseudo-spectral scheme of Cheng, Wang, Wise and Yue in its practically used form with an $O(\tau^2)$ stabilization $A(\phi^{n+1}-2\phi^n+\phi^{n-1})$. We show that each time step is the minimization of a strongly convex functional and that the linear iteration is exactly a fixed-step preconditioned gradient descent for this functional. This yields convergence of the relaxed iteration from any starting value for every stabilization parameter $A\ge 0$, time step and interface width, provided the relaxation parameter respects a bound determined by the maximum norm on a sublevel set; convergence, without a priori knowledge of the sublevel-set bound, of an Armijo line-search variant and of Newton's method with any positive number of preconditioned conjugate-gradient steps; and an explicit local rate. We then prove a two-sided a posteriori bound relating the residual of any candidate to its distance from the exact step solution, and an exact perturbed energy identity valid for any candidate. These give computable acceptance tests, costing no additional transforms, that guarantee decay of a modified energy for every $\tau>0$ and, with a residual tolerance proportional to $\tau^2$ and under the stated regularity and mesh--time-step conditions, optimal $O(\tau^2+h^m)$ convergence of the \emph{computed} solution in $\ell^\infty(H^{-1})\cap\ell^2(H^1)$; in general the error bound separates the discretization error from the computable algebraic term $(\tau\sum_n\nrm{\Rn(\phi^{n+1})}^2)^{1/2}$. Numerical experiments confirm the theory. The unrelaxed linear iteration can diverge in parameter regimes of practical interest, and relaxation with a fixed number of inner sweeps reduces the observed temporal order, whereas residual-based termination preserves second order. At equal accuracy on a smooth test problem, the computable acceptance rule needs up to $37\%$ fewer transforms than a fixed number of sweeps and $35$--$67\%$ fewer than a tight tolerance. On a droplet merger and an Ostwald-ripening test, the practical rule with an Armijo inner method reproduces the merger and disappearance steps of a tightly converged Newton--PCG solve with $54$--$67\%$ fewer transforms.
+\end{abstract}
+
+\subjclass[2020]{65M12, 65M70, 65H10, 65K10, 35K55}
+\keywords{Cahn--Hilliard equation, energy stability, Crank--Nicolson, Fourier pseudo-spectral method, inexact solves, preconditioned gradient descent, a posteriori error bound, stopping criteria}
+
+\maketitle
+
+\input{s1_intro}
+\input{s2_discrete}
+\input{s3_solver}
+\input{s4_error}
+\input{s5_numerics}
+\input{appendix}
+
+\bibliographystyle{amsplain}
+\bibliography{refs}
+\end{document}

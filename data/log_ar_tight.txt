@@ -1,0 +1,6 @@
+tight 0.001 0.0 {'status': 'ok', 'mean_it': 14.997, 'max_it': 21, 'nfft_per_step': 32.994, 'modE_increases': 0}
+tight 0.001 2.0 {'status': 'ok', 'mean_it': 18.769, 'max_it': 27, 'nfft_per_step': 40.538, 'modE_increases': 0}
+tight 0.004 0.0 {'status': 'ok', 'mean_it': 28.132, 'max_it': 35, 'nfft_per_step': 59.264, 'modE_increases': 0}
+tight 0.004 2.0 {'status': 'ok', 'mean_it': 18.632, 'max_it': 22, 'nfft_per_step': 40.264, 'modE_increases': 0}
+tight 0.016 0.0 {'status': 'ok', 'mean_it': 57.20967741935484, 'max_it': 74, 'nfft_per_step': 117.41935483870968, 'modE_increases': 0}
+tight 0.016 2.0 {'status': 'ok', 'mean_it': 19.838709677419356, 'max_it': 22, 'nfft_per_step': 42.67741935483871, 'modE_increases': 0}

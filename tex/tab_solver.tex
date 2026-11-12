@@ -1,0 +1,18 @@
+\begin{tabular}{llrrrrrrrrrrrr}
+\toprule
+& & \multicolumn{4}{c}{$\tau=0.001$} & \multicolumn{4}{c}{$\tau=0.004$} & \multicolumn{4}{c}{$\tau=0.016$}\\
+\cmidrule(lr){3-6}\cmidrule(lr){7-10}\cmidrule(lr){11-14}
+& & \multicolumn{2}{c}{$A=0$} & \multicolumn{2}{c}{$A=2$} & \multicolumn{2}{c}{$A=0$} & \multicolumn{2}{c}{$A=2$} & \multicolumn{2}{c}{$A=0$} & \multicolumn{2}{c}{$A=2$}\\
+stop & method & it & FFT & it & FFT & it & FFT & it & FFT & it & FFT & it & FFT\\
+\midrule
+\multirow{4}{*}{\shortstack[l]{$\nB{\Rn}\le10^{-10}$}} & linear, $\omega=1$ & \multicolumn{2}{c}{div.} & 18.8 & 41 & \multicolumn{2}{c}{div.} & 41.0 & 85 & \multicolumn{2}{c}{div.} & \multicolumn{2}{c}{div.}\\
+ & relaxed, $\omega=\frac12$ & 22.4 & 48 & 23.1 & 49 & 83.7 & 170 & 26.8 & 57 & \multicolumn{2}{c}{div.} & 30.2 & 63\\
+ & Armijo & 15.0 & 33 & 18.8 & 41 & 28.1 & 59 & 18.6 & 40 & 57.2 & 117 & 19.8 & 43\\
+ & Newton--PCG & 3.4 & 36 & 3.2 & 27 & 4.4 & 54 & 4.0 & 34 & 5.5 & 81 & 4.8 & 41\\
+\midrule
+\multirow{4}{*}{\shortstack[l]{(T$_E$)+(T$_A$)}} & linear, $\omega=1$ & \multicolumn{2}{c}{div.} & 8.2 & 19 & \multicolumn{2}{c}{div.} & 16.0 & 35 & \multicolumn{2}{c}{div.} & \multicolumn{2}{c}{div.}\\
+ & relaxed, $\omega=\frac12$ & 11.1 & 25 & 11.7 & 26 & 21.6 & 46 & 11.2 & 25 & \multicolumn{2}{c}{div.} & 10.5 & 24\\
+ & Armijo & 7.2 & 17 & 8.2 & 19 & 10.5 & 24 & 8.1 & 19 & 17.2 & 37 & 7.2 & 17\\
+ & Newton--PCG & 2.0 & 22 & 2.1 & 18 & 2.2 & 27 & 2.2 & 20 & 2.6 & 39 & 2.3 & 22\\
+\bottomrule
+\end{tabular}

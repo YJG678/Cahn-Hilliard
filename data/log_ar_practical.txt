@@ -1,0 +1,6 @@
+practical 0.001 0.0 {'status': 'ok', 'mean_it': 7.173, 'max_it': 13, 'nfft_per_step': 17.346, 'modE_increases': 0}
+practical 0.001 2.0 {'status': 'ok', 'mean_it': 8.162, 'max_it': 16, 'nfft_per_step': 19.324, 'modE_increases': 0}
+practical 0.004 0.0 {'status': 'ok', 'mean_it': 10.536, 'max_it': 17, 'nfft_per_step': 24.072, 'modE_increases': 0}
+practical 0.004 2.0 {'status': 'ok', 'mean_it': 8.084, 'max_it': 11, 'nfft_per_step': 19.168, 'modE_increases': 0}
+practical 0.016 0.0 {'status': 'ok', 'mean_it': 17.241935483870968, 'max_it': 24, 'nfft_per_step': 37.483870967741936, 'modE_increases': 0}
+practical 0.016 2.0 {'status': 'ok', 'mean_it': 7.161290322580645, 'max_it': 9, 'nfft_per_step': 17.322580645161292, 'modE_increases': 0}

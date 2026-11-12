@@ -1,0 +1,31 @@
+\section{Introduction}\label{sec:intro}
+
+We consider the Cahn--Hilliard equation \cite{CahnHilliard1958} on $\Omega=(0,L)^2$ with periodic boundary conditions,
+\begin{equation}\label{eq:ch}
+\partial_t\phi=\Delta\mu,\qquad \mu=\phi^3-\phi-\eps^2\Delta\phi,
+\end{equation}
+the $H^{-1}$ gradient flow of
+\begin{equation}\label{eq:energy}
+E(\phi)=\int_\Omega\Big(\tfrac14\phi^4-\tfrac12\phi^2\Big)\,dx+\frac{\eps^2}{2}\int_\Omega|\nabla\phi|^2\,dx,\qquad \frac{d}{dt}E(\phi)=-\nrm{\nabla\mu}_{L^2}^2,\qquad \frac{d}{dt}\int_\Omega\phi\,dx=0 .
+\end{equation}
+Energy-stable time discretizations are standard: convex splitting \cite{Eyre1998}, secant and discrete-gradient methods \cite{DuNicolaides1991,Furihata2001}, second-order convex-splitting schemes \cite{ShenWangWangWise2012,GuanLowengrubWangWise2014,DiegelWangWise2016,ChengWangWiseYue2016}, stabilized linear schemes \cite{FengTangYang2013,LiQiaoTang2016,YanChenWangWise2018,WangYu2018}, and auxiliary-variable formulations \cite{ShenXuYang2018,ShenXuYang2019}.
+
+We study the modified Crank--Nicolson Fourier pseudo-spectral scheme of Cheng, Wang, Wise and Yue \cite{ChengWangWiseYue2016} in its practically used form, with the stabilization $A(\phi^{n+1}-2\phi^n+\phi^{n-1})$ ($\alpha=0$ in \cite{ChengWangWiseYue2016}). Each step is a cubic system, solved in \cite{ChengWangWiseYue2016} by a constant-coefficient \emph{linear iteration}; contraction for $\alpha=0$ is left open there \cite[Remark~2.10]{ChengWangWiseYue2016}. Related $\ell^4$ contraction results are \cite{ZhuGongWang2025,ChenJingLiuWangWang2024}; preconditioned steepest descent and multigrid are used in \cite{FengSalgadoWangWise2017,ChenWangWise2022,GuanLowengrubWangWise2014}. All stability and convergence statements for the scheme concern the \emph{exact} step solution, whereas codes accept an iterate after finitely many sweeps. This paper analyses the scheme \emph{as computed}.
+
+\medskip\noindent\textbf{Main results.} Let $\Rn$ be the step residual, $\Jn$ the step functional, $\Bo$ the constant-coefficient preconditioner and $q=\frac32M^2\theta_N$ with $M$ a maximum-norm bound and $\theta_N\le(A+\sqrt3\eps\tau^{-1/2})^{-1}$ (\cref{sec:scheme}).
+\begin{enumerate}
+\item $\Jn$ is $1$-strongly convex in $\nBi\cdot$, $\Rn=\nabla\Jn$, and for every candidate $v$
+\[
+\Et(v,\phi^n)-\Et(\phi^n,\phi^{n-1})+\Dn(v)=\ip{\Rn(v)}{v-\phi^n}\qquad(\text{\cref{prop:convex,thm:identity}}).
+\]
+\item The linear iteration is $v^{k+1}=v^k-\Bo\Rn(v^k)$. With relaxation $\omega<2/(1+q_0)$ it converges globally for all $A\ge0$, $\tau,\eps>0$; with Armijo backtracking, or Newton--PCG with any positive number of conjugate-gradient steps, without a priori knowledge of $q_0$; locally with factor $\max\{|1-\omega|,|1-\omega(1+q_*)|\}$ (\cref{thm:global,thm:armijo,thm:local,thm:newton}).
+\item $\nBi{v-\phi^{n+1}}\le\nB{\Rn(v)}\le(1+q)\nBi{v-\phi^{n+1}}$, with a fully computable $q$ (\cref{cor:effectivity}), and the transform-free tests $|\ip{\Rn(v)}{v-\phi^n}|\le\eta\Dn(v)$, $\nrm{\Rn(v)}\le c_R\tau^2$ give energy decay of the computed sequence for every $\tau>0$ (\cref{thm:apost,thm:energysafe}).
+\item With accepted residuals $\rho^n$,
+\[
+\nrm{e^n}_{-1}+\Big(\tau\sum_{j\le n}\eps^2\nrm{\gradN e^j}^2\Big)^{1/2}\le C\Big(\tau^2+h^m+\Big(\tau\sum_{j<n}\nrm{\rho^j}^2\Big)^{1/2}\Big);
+\] hence, under \cref{ass:smooth}, $\tau\le\tau_0$ and $(1+\ln N)^{1/2}(\tau^{3/2}+\tau^{-1/2}h^m)\le c_0'$, $O(\tau^2+h^m)$ under the accuracy test (energy decay needs none of these conditions), and an $O(\tau)$ bound when $\nrm{\rho^n}=O(\tau)$, which a formal expansion identifies as the regime of a fixed number of relaxed sweeps; for the linearisation at $\phi=0$ the growth rate of $K$ relaxed sweeps is proved to carry the first-order error $-\frac{r}{1-r}\lambda^2\tau$, $r=(1-\omega)^K$, nonzero for $\lambda\ne0$, $0<r<1$ (\cref{thm:error,cor:TA,cor:fixedK,prop:fixedK,prop:linfixed}).
+\item Experiments (\cref{sec:numerics}) confirm divergence of the unrelaxed iteration, loss of order under fixed relaxed sweeps, sharpness of the a posteriori bound, and agreement of the practical rule (Armijo inner method) with tightly converged Newton--PCG in the reported observables at $54$--$67\%$ fewer transforms on six runs (labyrinthine coarsening, a merger, Ostwald ripening, three droplet patterns).
+\end{enumerate}
+\medskip\noindent\textbf{Relation to preconditioned-descent theory.} Preconditioned steepest descent for convex-splitting schemes is analysed in \cite{FengSalgadoWangWise2017,ChenWangWise2022}. For the logarithmic (Flory--Huggins) potential and a finite-difference convex-splitting scheme, Diegel, Wang and Wise \cite{DiegelWangWise2025} prove geometric convergence together with positivity of the logarithmic arguments, assuming strict separation of the discrete solution from $\pm1$. Park, Salgado and Wise \cite{ParkSalgadoWise2025} prove linear convergence of preconditioned gradient descent for strongly convex composite functionals when part of the gradient is computed inexactly, with an error term governed by the gradient accuracy. These results concern convergence \emph{within} one implicit step, for other schemes or inexactness models. Here the gradient is exact and the step functional is that of the second-order secant scheme of \cite{ChengWangWiseYue2016}, whose existing linear iteration is the unit-step method. What we add is the treatment of \emph{termination}: a computable two-sided certificate of the algebraic error (\cref{thm:apost,cor:effectivity}), an exact energy identity for arbitrary candidates that turns stopping into a test with guaranteed energy decay of the accepted sequence (\cref{thm:identity,thm:energysafe}), and the propagation of the accepted residuals through the time-stepping error analysis, giving the accumulated term $(\tau\sum\nrm{\rho^j}^2)^{1/2}$ (\cref{thm:error}).
+
+\Cref{sec:scheme} contains the discrete setting and the variational structure, \cref{sec:solver} the inner iterations and termination, \cref{sec:error} the error analysis, \cref{sec:numerics} the experiments and concluding remarks, and the appendix auxiliary proofs and implementation formulas.

@@ -1,0 +1,126 @@
+\section{Error analysis of the computed solution}\label{sec:error}
+
+\begin{assumption}\label{ass:smooth}
+The solution $u$ of \eqref{eq:ch} is $L$-periodic in space and $u\in C^3([0,T];H^{m+4}_{\rm per}(\Omega))$ for some $m\ge2$.
+\end{assumption}
+
+Let $\mathsf P_N$ be the $L^2$-projection onto trigonometric polynomials with frequencies $|k_1|,|k_2|<\frac N2$, $U^n$ the grid values of $\mathsf P_Nu(t_n)$, $U^{-1}=U^0$, $\bar t_n=t_{n+1/2}$, and $M_u=\sup_N\sup_{t\le T}\nrm{\mathsf P_Nu(t)}_{L^\infty}<\infty$. The computed solution starts from $\phi^0=\phi^{-1}=U^0$ and each step is accepted with residual
+\[
+\rho^n=\Rn(\phi^{n+1}),\qquad e^n=U^n-\phi^n\in\Vo,\qquad \Xi_n=\Big(\tau\sum_{j=0}^{n-1}\nrm{\rho^j}^2\Big)^{1/2}.
+\]
+$\Xi_n$ is computable: $\nrm{\rho^j}$ is evaluated in \cref{alg:step}.
+
+\begin{lemma}[consistency]\label{lem:consistency}
+Let $\zeta^n=\tau^{-1}(U^{n+1}-U^n)-\LapN\mu_n(U^{n+1})$, with $\mu_n$ formed from $(U^n,U^{n-1})$. Then $\zeta^n\in\Vo$ and, under \cref{ass:smooth},
+\begin{align}
+\zeta^n&=\zeta_1^n-\tau^2\Delta\mathsf P_N W(\bar t_n)+r^n,\quad \nrm{\zeta_1^n}_{-1}\le\tfrac{\tau^2}{24}\sup_t\nrm{u_{ttt}}_{-1},\quad \nrm{r^n}_{-1}\le C(\tau^3+h^m)\ (n\ge1),\label{eq:consistency}\\
+W&=\big(\tfrac38+A\big)u_{tt}-\tfrac38\eps^2\Delta u_{tt}+\tfrac38u^2u_{tt}+\tfrac14u\,u_t^2,\qquad \nrm{\zeta^0}_{-1}\le C(\tau+h^m),\notag
+\end{align}
+where $\zeta_1^n=\mathsf P_N[\tau^{-1}(u(t_{n+1})-u(t_n))-u_t(\bar t_n)]$. In particular $\nrm{\zeta^n}_{-1}\le C_u(\tau^2+h^m)$ for $n\ge1$.
+\end{lemma}
+The proof is in \cref{app:consistency}.
+
+\begin{theorem}\label{thm:error}
+Let \cref{ass:smooth} hold and $A\ge0$. There are $\tau_0,c_0,C>0$ depending on $u,\eps,A,L,T$ only such that, if $\tau\le\tau_0$ and
+\begin{equation}\label{eq:mild}
+(1+\ln N)^{1/2}\,\tau^{-1/2}\big(\tau^2+h^m+\Xi_n\big)\le c_0\qquad\text{for all }t_n\le T,
+\end{equation}
+then for all $t_n\le T$
+\begin{equation}\label{eq:errest}
+\nrm{e^n}_{-1}+\Big(\tau\sum_{j=1}^n\eps^2\nrm{\gradN e^j}^2\Big)^{1/2}\le C\big(\tau^2+h^m+\Xi_n\big),\qquad \nrm{\phi^n}_\infty\le M_u+1 .
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Let $\hat M=M_u+1$, $\hat\lambda=\frac32\hat M^2$,
+\begin{equation}\label{eq:Ks}
+K_2=\tfrac54,\qquad K_3=\tfrac12\big(\hat\lambda+\tfrac32\big)^2+4A,\qquad K_4=\tfrac14+A,\qquad C_\eps=\tfrac12+\tfrac2{\eps^2}\max\{K_2,K_3,K_4\}^2,
+\end{equation}
+and $a_j=\nrm{\gradN e^j}^2$, $b_j=\nrm{e^j}_{-1}^2$. We prove by induction on $k\ge1$: if
+\begin{equation}\label{eq:IH}
+\nrm{\phi^j}_\infty\le\hat M\qquad(0\le j\le k-1),
+\end{equation}
+then \eqref{eq:errest} holds for $n=k$. \eqref{eq:IH} holds for $k=1$.
+
+\emph{Error equation.} Subtracting \eqref{eq:perturbed-scheme} with $v=\phi^{n+1}$ from the definition of $\zeta^n$ (here $\mu_n(U^{n+1})$ is built from $(U^n,U^{n-1})$ and $\mu_n(\phi^{n+1})$ from $(\phi^n,\phi^{n-1})$),
+\begin{equation}\label{eq:erreq}
+\tau^{-1}(e^{n+1}-e^n)=\LapN\big(\mu_n(U^{n+1})-\mu_n(\phi^{n+1})\big)+\zeta^n+\LapN\rho^n .
+\end{equation}
+By symmetry of $\chi$ and \eqref{eq:secantD},
+\begin{equation}\label{eq:splitchi}
+\chi(U^{n+1},U^n)-\chi(\phi^{n+1},\phi^n)=\underbrace{D(U^{n+1},\phi^{n+1};\phi^n)}_{\mathfrak p_n\ge0}e^{n+1}+\underbrace{D(U^n,\phi^n;U^{n+1})}_{\mathfrak q_n}e^n,
+\end{equation}
+and $0\le \mathfrak q_n\le\hat\lambda$ for $n\le k-1$ by \eqref{eq:Dbound}, \eqref{eq:IH}. Hence
+\begin{equation}\label{eq:mudiff}
+\begin{aligned}\mu_n(U^{n+1})-\mu_n(\phi^{n+1})&=\mathfrak p_ne^{n+1}+\mathfrak q_ne^n-\big(\tfrac32e^n-\tfrac12e^{n-1}\big)\\&\qquad-\eps^2\LapN\big(\tfrac34e^{n+1}+\tfrac14e^{n-1}\big)+A\big(e^{n+1}-2e^n+e^{n-1}\big).\end{aligned}
+\end{equation}
+
+\emph{Step $n=0$.} $e^0=e^{-1}=0$ and $\mathfrak q_0e^0=0$. Testing \eqref{eq:erreq} with $\tau(-\LapN)^{-1}e^1$,
+\[
+b_1+\tau\ip{\mathfrak p_0e^1}{e^1}+\tfrac34\tau\eps^2a_1+\tau A\nrm{e^1}^2=\tau\ip{\zeta^0}{(-\LapN)^{-1}e^1}-\tau\ip{\rho^0}{e^1}\le\tau\nrm{\zeta^0}_{-1}b_1^{1/2}+\tfrac{\tau L}{2\pi}\nrm{\rho^0}a_1^{1/2},
+\]
+by \cref{lem:discrete}(b). With $xy\le\frac12x^2+\frac12y^2$ and $xy\le\frac{\eps^2}4y^2+\frac1{\eps^2}x^2$,
+\begin{equation}\label{eq:firststep}
+b_1+\tau\eps^2a_1\le\tau^2\nrm{\zeta^0}_{-1}^2+\tfrac{L^2}{2\pi^2\eps^2}\tau\nrm{\rho^0}^2\le C\big(\tau^4+h^{2m}+\tau\nrm{\rho^0}^2\big).
+\end{equation}
+
+\emph{Step $1\le n\le k-1$.} Testing \eqref{eq:erreq} with $\tau(-\LapN)^{-1}e^{n+1}$ and using $\ip{x-y}x=\frac12(\nrm x^2-\nrm y^2+\nrm{x-y}^2)$,
+\begin{multline*}
+\tfrac12\big(b_{n+1}-b_n+\nrm{e^{n+1}-e^n}_{-1}^2\big)+\tau\ip{\mu_n(U^{n+1})-\mu_n(\phi^{n+1})}{e^{n+1}}\\=\tau\ip{\zeta^n}{(-\LapN)^{-1}e^{n+1}}-\tau\ip{\rho^n}{e^{n+1}} .
+\end{multline*}
+Writing $x_j=\nrm{e^j}$, the terms of \eqref{eq:mudiff} satisfy
+\begin{align*}
+\ip{\mathfrak p_ne^{n+1}+\mathfrak q_ne^n}{e^{n+1}}&\ge-\hat\lambda x_nx_{n+1},\\
+-\ip{\tfrac32e^n-\tfrac12e^{n-1}}{e^{n+1}}&\ge-\tfrac32x_nx_{n+1}-\tfrac12x_{n-1}x_{n+1},\\
+\eps^2\big\langle\tfrac34e^{n+1}+\tfrac14e^{n-1},e^{n+1}\big\rangle_1&\ge\tfrac34\eps^2a_{n+1}-\tfrac14\eps^2a_{n-1}^{1/2}a_{n+1}^{1/2}\ge\tfrac58\eps^2a_{n+1}-\tfrac18\eps^2a_{n-1},\\
+A\ip{e^{n+1}-(2e^n-e^{n-1})}{e^{n+1}}&\ge\tfrac A2x_{n+1}^2-\tfrac A2\nrm{2e^n-e^{n-1}}^2\ge-4Ax_n^2-Ax_{n-1}^2,
+\end{align*}
+and the right-hand side is at most $\frac\tau2(\nrm{\zeta^n}_{-1}^2+b_{n+1})+\frac\tau2(\nrm{\rho^n}^2+x_{n+1}^2)$. With $(\hat\lambda+\frac32)x_nx_{n+1}\le\frac12x_{n+1}^2+\frac12(\hat\lambda+\frac32)^2x_n^2$ and $\frac12x_{n-1}x_{n+1}\le\frac14x_{n+1}^2+\frac14x_{n-1}^2$,
+\begin{equation}\label{eq:step1}
+\tfrac12(b_{n+1}-b_n)+\tau\eps^2\big(\tfrac58a_{n+1}-\tfrac18a_{n-1}\big)\le\tfrac\tau2\big(\nrm{\zeta^n}_{-1}^2+\nrm{\rho^n}^2+b_{n+1}\big)+\tau\big(K_2x_{n+1}^2+K_3x_n^2+K_4x_{n-1}^2\big).
+\end{equation}
+By \cref{lem:discrete}(a), $Kx_j^2\le Kb_j^{1/2}a_j^{1/2}\le\frac{\eps^2}8a_j+\frac{2K^2}{\eps^2}b_j$. Hence
+\begin{equation}\label{eq:step2}
+\tfrac12(b_{n+1}-b_n)+\tau\eps^2\big(\tfrac12a_{n+1}-\tfrac18a_n-\tfrac14a_{n-1}\big)\le\tfrac\tau2\big(\nrm{\zeta^n}_{-1}^2+\nrm{\rho^n}^2\big)+\tau C_\eps\big(b_{n+1}+b_n+b_{n-1}\big).
+\end{equation}
+
+\emph{Summation.} For $2\le k'\le k$, summing \eqref{eq:step2} over $1\le n\le k'-1$ with $a_0=0$,
+\[
+\sum_{n=1}^{k'-1}\big(\tfrac12a_{n+1}-\tfrac18a_n-\tfrac14a_{n-1}\big)\ge\big(\tfrac12-\tfrac18-\tfrac14\big)\sum_{j=2}^{k'}a_j-\big(\tfrac18+\tfrac14\big)a_1=\tfrac18\sum_{j=2}^{k'}a_j-\tfrac38a_1,
+\]
+so that, with $\Phi_{k'}=\frac12b_1+\frac38\tau\eps^2a_1+\frac\tau2\sum_{n=1}^{k'-1}(\nrm{\zeta^n}_{-1}^2+\nrm{\rho^n}^2)$,
+\begin{equation}\label{eq:summed}
+\tfrac12b_{k'}+\tfrac18\tau\eps^2\sum_{j=2}^{k'}a_j\le\Phi_{k'}+3\tau C_\eps\sum_{j=0}^{k'}b_j .
+\end{equation}
+By \eqref{eq:firststep}, \cref{lem:consistency} and $\tau\nrm{\zeta^0}_{-1}\le C(\tau^2+\tau h^m)$, $\Phi_{k'}\le\Phi:=C_\Phi^2(\tau^2+h^m+\Xi_k)^2$ with $C_\Phi$ independent of $k,\tau,N$.
+
+\emph{Gronwall.} Let $\tau_0\le(12C_\eps)^{-1}$. From \eqref{eq:summed}, $\frac14b_{k'}\le\Phi+3\tau C_\eps\sum_{j<k'}b_j$ for $2\le k'\le k$; this also holds for $k'=0,1$ since $b_0=0$ and $b_1\le2\Phi$ by \eqref{eq:firststep}. \Cref{lem:gronwall} gives $b_{k'}\le4\Phi e^{12C_\eps t_{k'}}$. Inserting into \eqref{eq:summed} with $k'=k$ and adding \eqref{eq:firststep},
+\begin{equation}\label{eq:gronwall}
+b_k+\tau\eps^2\sum_{j=1}^ka_j\le C_*^2\big(\tau^2+h^m+\Xi_k\big)^2,\qquad C_*^2=C\,C_\Phi^2\big(1+TC_\eps\big)e^{12C_\eps T},
+\end{equation}
+which is \eqref{eq:errest} for $n=k$.
+
+\emph{Closing the induction.} From \eqref{eq:gronwall}, $a_k^{1/2}\le C_*\eps^{-1}\tau^{-1/2}(\tau^2+h^m+\Xi_k)$, and by \cref{lem:discrete}(c)
+\[
+\nrm{\phi^k}_\infty\le\nrm{U^k}_\infty+\nrm{e^k}_\infty\le M_u+\tfrac{\sqrt2}\pi(1+\ln N)^{1/2}C_*\eps^{-1}\tau^{-1/2}\big(\tau^2+h^m+\Xi_k\big)\le M_u+1
+\]
+if $c_0\le\pi\eps/(\sqrt2C_*)$. So \eqref{eq:IH} holds for $k+1$.
+\end{proof}
+
+\begin{corollary}[accuracy test]\label{cor:TA}
+If every step satisfies (T$_A$), then $\Xi_n\le c_R\sqrt T\tau^2$ and, under $\tau\le\tau_0$, $(1+\ln N)^{1/2}(\tau^{3/2}+\tau^{-1/2}h^m)\le c_0'$,
+\[
+\nrm{e^n}_{-1}+\Big(\tau\sum_{j=1}^n\eps^2\nrm{\gradN e^j}^2\Big)^{1/2}\le C(\tau^2+h^m).
+\]
+Exact solves are the case $c_R=0$. With (T$_E$) also imposed, \cref{thm:energysafe} holds for the same sequence.
+\end{corollary}
+
+\begin{corollary}[residual of order $\tau$]\label{cor:fixedK}
+If $\nrm{\rho^n}\le c_1\tau$ for all $n$, then $\Xi_n\le c_1\sqrt T\tau$, and under $(1+\ln N)^{1/2}(\tau^{1/2}+\tau^{-1/2}h^m)\le c_0'$ the error is $O(\tau+h^m)$. By \eqref{eq:fixedKres} this is the regime of a fixed number of relaxed sweeps.
+\end{corollary}
+
+\begin{remark}\label{rem:error}
+(i) \eqref{eq:mild} is used only for $\nrm{\phi^n}_\infty\le\hat M$. Truncating the quartic potential to one with globally Lipschitz derivative \cite{CondetteMelcherSuli2011} removes it, as in the fully discrete analysis \cite{ZhouWuWang2026}, but changes the scheme; for the quartic potential the maximum norm must be controlled. In three dimensions $(1+\ln N)^{1/2}$ becomes $CN^{1/2}$.
+(ii) $C_*\sim e^{CT\eps^{-2}}$ through $C_\eps$; polynomial dependence on $\eps^{-1}$ requires a spectral estimate for the linearized operator \cite{Chen1994,AlikakosFusco1993,FengProhl2004}.
+(iii) \eqref{eq:errest} separates the discretization error $\tau^2+h^m$ from the algebraic error $\Xi_n$, which is computable.
+\end{remark}

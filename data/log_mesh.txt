@@ -1,0 +1,12 @@
+64 linear_w1_A2 {'status': 'ok', 'mean_it': 22.968, 'max_it': 29, 'fails': 0, 'nfft_per_step': 48.936, 'wall': 0.998903751373291}
+64 armijo_A0 {'status': 'ok', 'mean_it': 26.724, 'max_it': 30, 'fails': 0, 'nfft_per_step': 56.448, 'wall': 2.179779052734375}
+64 newton_A0 {'status': 'ok', 'mean_it': 4.164, 'max_it': 5, 'fails': 0, 'nfft_per_step': 41.152, 'wall': 0.9130868911743164}
+128 linear_w1_A2 {'status': 'ok', 'mean_it': 20.308, 'max_it': 29, 'fails': 0, 'nfft_per_step': 43.616, 'wall': 2.8592684268951416}
+128 armijo_A0 {'status': 'ok', 'mean_it': 24.868, 'max_it': 30, 'fails': 0, 'nfft_per_step': 52.736, 'wall': 9.47149658203125}
+128 newton_A0 {'status': 'ok', 'mean_it': 4.012, 'max_it': 5, 'fails': 0, 'nfft_per_step': 39.888, 'wall': 3.37269926071167}
+256 linear_w1_A2 {'status': 'ok', 'mean_it': 20.396, 'max_it': 29, 'fails': 0, 'nfft_per_step': 43.792, 'wall': 13.20737361907959}
+256 armijo_A0 {'status': 'ok', 'mean_it': 24.56, 'max_it': 30, 'fails': 0, 'nfft_per_step': 52.12, 'wall': 46.828495264053345}
+256 newton_A0 {'status': 'ok', 'mean_it': 4.06, 'max_it': 5, 'fails': 0, 'nfft_per_step': 40.264, 'wall': 17.886577367782593}
+512 linear_w1_A2 {'status': 'ok', 'mean_it': 20.388, 'max_it': 29, 'fails': 0, 'nfft_per_step': 43.776, 'wall': 67.23040962219238}
+512 armijo_A0 {'status': 'ok', 'mean_it': 24.556, 'max_it': 30, 'fails': 0, 'nfft_per_step': 52.112, 'wall': 243.72631406784058}
+512 newton_A0 {'status': 'ok', 'mean_it': 4.06, 'max_it': 5, 'fails': 0, 'nfft_per_step': 40.272, 'wall': 80.29446744918823}

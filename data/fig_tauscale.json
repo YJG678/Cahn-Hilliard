@@ -1,0 +1,1 @@
+{"N": 512, "L": 12.8, "eps": 0.02, "A": 0.0, "tau": 0.002, "seed": 1, "solver": "Newton-PCG, ||R||_B<=1e-10", "note": "compare with t_0.2, t_1 in fig_bench_snaps.npz (tau=0.004, same solver)"}
